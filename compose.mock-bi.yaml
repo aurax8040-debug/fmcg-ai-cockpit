@@ -1,0 +1,26 @@
+name: docker
+
+services:
+  mock-bi:
+    build:
+      context: .
+      dockerfile: server/Dockerfile
+    restart: unless-stopped
+    environment:
+      PORT: "8787"
+      STATE_FILE: /data/runtime-state.json
+      DIFY_BASE_URL: http://api:5001/v1
+      DIFY_API_KEY: ${DIFY_API_KEY:-}
+    ports:
+      - "127.0.0.1:8787:8787"
+    volumes:
+      - fmcg_demo_state:/data
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:8787/api/health"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+      start_period: 5s
+
+volumes:
+  fmcg_demo_state:

@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>快消智析平台 · 产品说明</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;font-family:"PingFang SC","Microsoft YaHei",sans-serif;}
+  :root{--primary:#2f6bff;--bg:#f4f7fc;--card:#fff;--line:#e8edf5;--txt:#1f2a44;--sub:#5c6b8a;--risk:#e34d4d;--ok:#2ba471;--warn:#f5a623;}
+  body{background:var(--bg);color:var(--txt);line-height:1.7;}
+  .wrap{max-width:860px;margin:0 auto;padding:32px 20px 80px;}
+  .hero{background:linear-gradient(135deg,#2f6bff,#5b8cff);color:#fff;border-radius:16px;padding:36px 32px;margin-bottom:24px;}
+  .hero h1{font-size:26px;font-weight:700;margin-bottom:8px;}
+  .hero .sub{font-size:14px;opacity:.92;}
+  .hero .tag{display:inline-block;background:rgba(255,255,255,.18);padding:3px 12px;border-radius:20px;font-size:12px;margin-top:14px;margin-right:8px;}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:26px 28px;margin-bottom:18px;}
+  .card h2{font-size:18px;font-weight:700;margin-bottom:16px;padding-left:12px;border-left:4px solid var(--primary);}
+  .card h3{font-size:15px;font-weight:600;margin:16px 0 8px;color:var(--txt);}
+  .card p,.card li{font-size:14px;color:var(--sub);}
+  .card ul{padding-left:20px;margin:6px 0;}
+  .card li{margin:5px 0;}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  @media(max-width:640px){.grid{grid-template-columns:1fr;}}
+  .pill{display:inline-block;background:#eef3ff;color:var(--primary);padding:2px 10px;border-radius:6px;font-size:12px;margin:2px 4px 2px 0;}
+  .hl{color:var(--primary);font-weight:600;}
+  .risk{color:var(--risk);font-weight:600;}
+  .ok{color:var(--ok);font-weight:600;}
+  .table-wrap{overflow-x:auto;}
+  table{width:100%;border-collapse:collapse;font-size:13px;}
+  th,td{border:1px solid var(--line);padding:9px 12px;text-align:left;}
+  th{background:#f6f9ff;color:var(--txt);font-weight:600;white-space:nowrap;}
+  td{color:var(--sub);}
+  .note{background:#fff8ec;border:1px solid #ffe0a8;border-radius:10px;padding:14px 16px;font-size:13px;color:#8a6d1f;margin-top:14px;}
+  .foot{text-align:center;color:#9aa7bf;font-size:12px;margin-top:32px;}
+  .principle{display:flex;gap:10px;align-items:flex-start;margin:10px 0;}
+  .principle .no{flex:none;width:22px;height:22px;border-radius:50%;background:var(--primary);color:#fff;font-size:12px;text-align:center;line-height:22px;font-weight:700;}
+  .principle .txt{font-size:14px;color:var(--sub);}
+  .principle .txt b{color:var(--txt);}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="hero">
+    <h1>快消智析平台</h1>
+    <div class="sub">面向快消（FMCG）终端执行协同的 AI 经营分析驾驶舱</div>
+    <div>
+      <span class="tag">AI 产品 · 面试作品 Demo</span>
+      <span class="tag">数据驱动经营决策</span>
+      <span class="tag">人机协同</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>当前面试主线：KA活动AI经营闭环</h2>
+    <p><b>数据底座 → AI研判 → 业务执行 → AI经营分析</b>。场景来自佳沛经销商向KA商超供货的活动协同：总部确认活动，营销部协调执行公司与长临促，战区销售巡店跟进，POS按门店回流。</p>
+    <p style="margin-top:10px;"><span class="pill">真实样例</span>NKA客户/月聚合　<span class="pill">匿名模拟</span>活动、POS、费用、执行证据　<span class="pill">AI 推断</span>Dify有引用研判</p>
+    <div class="note">当前 Demo 未接真实 BI API、库存、SFA 下发或业务结果。没有有效对照组时只展示“变化观察”，不声称活动带来因果增量。</div>
+  </div>
+
+  <!-- 一句话定位 -->
+  <div class="card">
+    <h2>一、产品是什么</h2>
+    <p><span class="hl">快消智析平台</span>是一款面向快消企业销售运营与 KA 负责人、融合 <b>BI 经营分析</b>与 <b>AI 智能研判</b>的决策驾驶舱。它解决一个核心痛点：<b>数据散落在 ERP / POS / SFA 多处，销售团队「看得见数字、却看不清问题、更追不上执行」。</b></p>
+    <p style="margin-top:10px;">产品把「算数」交给 BI、把「研判」交给 AI、把「拍板与执行」交给人，形成一条 <b>「发现异常 → 组织证据 → 生成任务 → 执行复盘」</b>的闭环。</p>
+  </div>
+
+  <!-- 目标用户与痛点 -->
+  <div class="card">
+    <h2>二、目标用户与核心痛点</h2>
+    <table>
+      <tr><th>用户角色</th><th>核心痛点</th><th>产品提供的价值</th></tr>
+      <tr><td>销售运营 / KA 负责人</td><td>经营数据多源、口径不一，异常靠经验排查</td><td>统一口径的 KPI 看板 + AI 自动筛异常</td></tr>
+      <tr><td>区域督导 / 门店主管</td><td>拜访、陈列、核销执行靠人盯，闭环缺失</td><td>任务草稿 + 证据驱动的执行跟进</td></tr>
+      <tr><td>管理层 / PMO</td><td>汇报靠手工汇总，决策缺证据支撑</td><td>结构化经营摘要 + 可追溯的证据链</td></tr>
+    </table>
+  </div>
+
+  <!-- 核心设计理念 -->
+  <div class="card">
+    <h2>三、核心设计理念：BI 算数 · AI 研判 · 人拍板</h2>
+    <p style="margin-bottom:10px;">这是产品与「普通 BI 报表」的本质区别——<b>AI 的价值不在算数，而在跨指标判断、证据组织与跟进建议</b>。</p>
+    <div class="principle"><div class="no">1</div><div class="txt"><b>BI 算数</b>：销售额、毛利、达成率、动销等指标的实时计算与可视化，保证「数字对」。</div></div>
+    <div class="principle"><div class="no">2</div><div class="txt"><b>AI 研判</b>：跨指标识别异常客户、给出待验证的归因假设、组织证据、生成跟进建议——但不代替人下结论。</div></div>
+    <div class="principle"><div class="no">3</div><div class="txt"><b>人拍板</b>：所有判断均标注「待验证」，原因需人工核对进货价、费用归属后确认，责任清晰。</div></div>
+    <div class="note">设计红线：<b>AI 不直接认定「经营不合格」</b>，只提示风险、组织证据、建议下一步动作；最终结论与行动由人负责。</div>
+  </div>
+
+  <!-- 六大场景 -->
+  <div class="card">
+    <h2>四、AI 核心场景（六步闭环）</h2>
+    <table>
+      <tr><th>场景</th><th>AI 做什么</th><th>人做什么</th></tr>
+      <tr><td>① 经营核查</td><td>自动筛出毛利亏损、陈列不足、未动销等异常客户</td><td>确认范围，判断优先级</td></tr>
+      <tr><td>② 避免误判</td><td>标注「待验证」，区分真实数据与演示快照</td><td>核对进货价、费用归属</td></tr>
+      <tr><td>③ 利润风险核查</td><td>定位负毛利订单、提示成本/退货异常假设</td><td>核对原始单据凭证</td></tr>
+      <tr><td>④ 原因调查</td><td>列出缺失证据清单，提示需要补什么</td><td>组织现场证据</td></tr>
+      <tr><td>⑤ 方案草稿</td><td>生成核查任务草稿（负责人/截止/证据清单）</td><td>审核后下发</td></tr>
+      <tr><td>⑥ 执行复盘</td><td>回看执行效果，标注「效果待验证」</td><td>归因真实经营增量</td></tr>
+    </table>
+  </div>
+
+  <!-- 功能模块 -->
+  <div class="card">
+    <h2>五、功能模块</h2>
+    <div class="grid">
+      <div>
+        <h3>◉ 数据驾驶舱</h3>
+        <p>一屏总览：确认收入、毛利润、预算达成、动销门店、AI 有效跟进 5 项 KPI + 战区销售地图 + KA 四象限 + 品类排行。</p>
+      </div>
+      <div>
+        <h3>✦ AI 归因诊断</h3>
+        <p>本期异常诊断 + 归因证据覆盖分布，异常客户自动排序，一键生成核查任务。</p>
+      </div>
+      <div>
+        <h3>✓ SFA 门店拜访</h3>
+        <p>拜访执行 KPI、省份达成、门店等级 / 分销执行 / 陈列管理，配合 AI 洞察。</p>
+      </div>
+      <div>
+        <h3>▤ KA 客户分析</h3>
+        <p>单客户毛利率×毛利额四象限、客户销售排行、AI 客户洞察。</p>
+      </div>
+      <div>
+        <h3>▦ BI 分析（5 页）</h3>
+        <p>销售明细 / 月度汇总 / 客户汇总 / 战区汇总 / 品类分析，全量真实数据可下钻。</p>
+      </div>
+      <div>
+        <h3>♉ Sell-Out 预算跟进</h3>
+        <p>各 KA 预算达成率横向对比，红色预警未达标项。</p>
+      </div>
+      <div>
+        <h3>◱ 商超云 POS 数据</h3>
+        <p>门店分级（Y25 vs Y26）销售与同比，支撑门店分层经营。</p>
+      </div>
+      <div>
+        <h3>✎ 每日智能简报</h3>
+        <p>每日经营摘要 + 今日重点，角色订阅推送（预览态）。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 数据真实性说明 -->
+  <div class="card">
+    <h2>六、数据说明（真实性边界）</h2>
+    <p>产品严格区分<span class="hl">真实数据</span>与<span class="risk">演示快照</span>，这是本 demo 的诚信原则：</p>
+    <ul>
+      <li><b class="ok">真实数据</b>：销售、毛利、销量、品类、战区分布——来自 <b>NKA商超.xlsx</b>（财年累计，约 11 万行明细聚合），口径为「确认收入 = 订单收入，毛利 = 确认收入 - 确认成本」。</li>
+      <li><b class="risk">演示快照</b>：门店等级、拜访、陈列、核销、SKU 明细——Excel 无此数据，为演示占位，均明确标注「待验证 / 待接入」。</li>
+    </ul>
+    <div class="note">面试讲法建议：<b>「数据是真的，流程是真的，但门店/拜访侧字段是演示快照，真实系统接口（POS/SFA）待接入」</b>——诚实、且体现对数据口径的把控力。</div>
+  </div>
+
+  <!-- 业务规模 -->
+  <div class="card">
+    <h2>七、业务覆盖规模（示例口径）</h2>
+    <div class="grid">
+      <div><h3>KA 系统</h3><p><span class="hl">13 个</span>（重点客户：盒马、胖东来等）</p></div>
+      <div><h3>商朝云 POS 对接</h3><p><span class="hl">20+ 家商超</span></p></div>
+      <div><h3>覆盖门店</h3><p><span class="hl">3,862 家</span></p></div>
+      <div><h3>SKU</h3><p><span class="hl">325 个</span></p></div>
+      <div><h3>战区</h3><p><span class="hl">3 大战区</span>（华东 / 华北 / 华南）</p></div>
+      <div><h3>系统数据源</h3><p><span class="hl">POS + ERP + SFA</span> 三套打通</p></div>
+    </div>
+  </div>
+
+  <!-- 产品价值与差异化 -->
+  <div class="card">
+    <h2>八、产品价值与差异化</h2>
+    <ul>
+      <li><b>从「看板」到「行动」</b>：多数 BI 止步于可视化，本产品把异常直接转化为「可下发的核查任务」，闭环到执行。</li>
+      <li><b>人机分工清晰</b>：AI 做研判、组织证据、提建议，人做判断与执行——既不「甩锅给 AI」，也不「让人淹没在数据里」。</li>
+      <li><b>诚信的数据边界</b>：明确区分真实数据与演示快照，避免用虚构数据误导决策，这是 B 端 AI 产品建立信任的关键。</li>
+      <li><b>最小可讲流程</b>：面试时用「3 大战区 + 1 条异常闭环」即可讲清产品逻辑，无需展开全部 13 个 KA。</li>
+    </ul>
+  </div>
+
+  <!-- 系统对接架构 -->
+  <div class="card">
+    <h2>九、系统对接架构（多系统数据打通）</h2>
+    <p style="margin-bottom:10px;">产品不是「另起炉灶」，而是把快消企业已经跑通的 <b>POS / ERP / SFA</b> 三套系统打通，形成统一口径的经营数据底座。</p>
+    <table>
+      <tr><th>系统</th><th>对接范围</th><th>提供的数据</th></tr>
+      <tr><td><b>商朝云 POS</b></td><td><span class="hl">对接 20+ 家商超</span>（盒马、胖东来等 KA 的商超云收银系统）</td><td>商超销售流水、日明细、门店分级（Y25/Y26）销售与同比</td></tr>
+      <tr><td><b>ERP</b></td><td>财务与订单侧</td><td>确认收入、确认成本、毛利，订单级成本/退货冲减记录</td></tr>
+      <tr><td><b>SFA</b></td><td>销售自动化 / 拜访执行侧</td><td>门店拜访、陈列、分销执行、核销等终端执行数据</td></tr>
+    </table>
+
+    <h3>商品 / 门店的多重对应关系（核心难点）</h3>
+    <p>多系统对接最大的坑不在「接口」，而在<b>主数据的多对多映射</b>：</p>
+    <ul>
+      <li><b>门店-SFA-ERP 编码映射</b>：同一家实体门店，在 POS、SFA、ERP 三套系统里编码不一致，需建立映射关系，才能把「拜访执行」与「销售结果」对齐到同一家门店。</li>
+      <li><b>商品多对多</b>：同一商品在不同商超、不同系统里条码/名称/规格各异，需统一商品主数据，才能聚合出准确的品类与 SKU 口径。</li>
+      <li><b>价值</b>：映射打通后，才能回答「这家门店到底卖了多少、拜访到位了没、陈列执行了吗」这类跨系统问题——这是 AI 归因诊断的数据基础。</li>
+    </ul>
+
+    <div class="note">面试讲法建议：<b>「对接 20+ 商超的商朝云 POS + ERP + SFA，难点在于门店和商品的多重对应关系——同一门店、同一商品在三个系统里编码都不同，先做映射打通，数据才能真正对起来。」</b>这一句能直接体现你的真实落地经验。</div>
+  </div>
+
+  <!-- 技术实现 -->
+  <div class="card">
+    <h2>十、技术实现要点</h2>
+    <ul>
+      <li><b>前端</b>：纯 HTML + JS + ECharts（中国地图气泡 + 四象限散点 + 多图表），移动端适配。</li>
+      <li><b>数据源</b>：NKA商超.xlsx 明细流式聚合为常量数据，前端免后端加载。</li>
+      <li><b>AI 能力</b>：已接入 WorkBuddy 云服务真实大模型（流式输出），规则问答命中时优先走确定性答案，其余走大模型，失败自动回退规则解读。</li>
+      <li><b>发布形态</b>：静态站点，微信可直接分享。</li>
+    </ul>
+  </div>
+
+  <div class="foot">快消智析平台 · 产品说明 · 面试 Demo 版</div>
+</div>
+</body>
+</html>

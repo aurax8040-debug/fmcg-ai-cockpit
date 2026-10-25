@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>快消智析平台 · 产品蓝图 PRD</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;font-family:"PingFang SC","Microsoft YaHei",sans-serif;}
+  :root{--primary:#2f6bff;--bg:#f4f7fc;--card:#fff;--line:#e8edf5;--txt:#1f2a44;--sub:#5c6b8a;--risk:#e34d4d;--ok:#2ba471;--warn:#f5a623;--code-bg:#0f172a;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--bg);color:var(--txt);line-height:1.75;}
+  .toc{position:sticky;top:0;z-index:50;background:#fff;border-bottom:1px solid var(--line);padding:10px 20px;display:flex;gap:6px;flex-wrap:wrap;align-items:center;}
+  .toc a{font-size:12px;color:var(--sub);text-decoration:none;padding:4px 11px;border-radius:16px;background:#f2f5fb;white-space:nowrap;}
+  .toc a:hover{background:var(--primary);color:#fff;}
+  .wrap{max-width:960px;margin:0 auto;padding:28px 20px 90px;}
+  .hero{background:linear-gradient(135deg,#2f6bff,#6a8fff);color:#fff;border-radius:16px;padding:38px 34px;margin-bottom:22px;}
+  .hero h1{font-size:27px;font-weight:700;margin-bottom:10px;}
+  .hero .sub{font-size:14px;opacity:.93;max-width:720px;}
+  .hero .tag{display:inline-block;background:rgba(255,255,255,.18);padding:3px 12px;border-radius:20px;font-size:12px;margin-top:16px;margin-right:8px;}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:26px 28px;margin-bottom:18px;}
+  .card h2{font-size:18px;font-weight:700;margin-bottom:16px;padding-left:12px;border-left:4px solid var(--primary);}
+  .card h3{font-size:15px;font-weight:600;margin:18px 0 8px;color:var(--txt);}
+  .card h3:first-child{margin-top:0;}
+  .card p,.card li{font-size:14px;color:var(--sub);}
+  .card ul{padding-left:20px;margin:6px 0;}
+  .card li{margin:5px 0;}
+  .hl{color:var(--primary);font-weight:600;}
+  .risk{color:var(--risk);font-weight:600;}
+  .ok{color:var(--ok);font-weight:600;}
+  .warn{color:var(--warn);font-weight:600;}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  @media(max-width:640px){.grid{grid-template-columns:1fr;}}
+  .pill{display:inline-block;background:#eef3ff;color:var(--primary);padding:2px 10px;border-radius:6px;font-size:12px;margin:2px 4px 2px 0;}
+  .pill.green{background:#e9f7ef;color:var(--ok);}
+  .pill.red{background:#fdeaea;color:var(--risk);}
+  .pill.amber{background:#fff5e6;color:#b97a10;}
+  .table-wrap{overflow-x:auto;}
+  table{width:100%;border-collapse:collapse;font-size:13px;}
+  th,td{border:1px solid var(--line);padding:9px 12px;text-align:left;vertical-align:top;}
+  th{background:#f6f9ff;color:var(--txt);font-weight:600;white-space:nowrap;}
+  td{color:var(--sub);}
+  .note{background:#fff8ec;border:1px solid #ffe0a8;border-radius:10px;padding:14px 16px;font-size:13px;color:#8a6d1f;margin-top:14px;}
+  .guard{background:#fdf3f3;border:1px solid #f5c6c6;border-radius:10px;padding:14px 16px;font-size:13px;color:#a33;margin-top:14px;}
+  .flow{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:10px 0;}
+  .step{background:#eef3ff;border:1px solid #d4e0ff;color:var(--primary);padding:7px 13px;border-radius:8px;font-size:13px;font-weight:600;}
+  .arrow{color:#b6c2da;font-weight:700;}
+  .tagline{font-size:15px;color:var(--txt);font-weight:700;margin:4px 0 12px;}
+  code{font-family:"SF Mono",Menlo,monospace;font-size:12px;background:#f2f5fb;padding:1px 6px;border-radius:4px;color:#3350a8;}
+  .legend{display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--sub);margin:10px 0;}
+  .legend span::before{content:"";display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;vertical-align:-1px;}
+  .l-b::before{background:#d4e0ff;}.l-a::before{background:#ffe0a8;}.l-r::before{background:#f5c6c6;}.l-g::before{background:#bce3d0;}
+  .foot{text-align:center;color:#9aa7bf;font-size:12px;margin-top:34px;}
+  .stat{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:6px;}
+  @media(max-width:640px){.stat{grid-template-columns:1fr;}}
+  .stat .box{background:#f7faff;border:1px solid var(--line);border-radius:10px;padding:14px 16px;text-align:center;}
+  .stat .num{font-size:22px;font-weight:700;color:var(--primary);}
+  .stat .lbl{font-size:12px;color:var(--sub);margin-top:2px;}
+</style>
+</head>
+<body>
+
+<div class="toc">
+  <a href="#s0">定位</a>
+  <a href="#s1">用户流程</a>
+  <a href="#s2">AI流程</a>
+  <a href="#s3">Context</a>
+  <a href="#s4">状态机</a>
+  <a href="#s5">守护规则</a>
+  <a href="#s6">风险</a>
+  <a href="#s7">评测</a>
+  <a href="#s8">MVP</a>
+  <a href="#s9">架构</a>
+  <a href="#s10">路线图</a>
+</div>
+
+<div class="wrap">
+
+  <div class="hero">
+    <h1>快消智析平台 · 产品蓝图 PRD</h1>
+    <div class="sub">面向快消（FMCG）终端执行协同的 AI 经营分析驾驶舱 —— 把「算数」交给 BI、「研判」交给 AI、「拍板与执行」交给人。</div>
+    <div>
+      <span class="tag">AI 产品 · 面试作品</span>
+      <span class="tag">数据驱动经营决策</span>
+      <span class="tag">人机协同</span>
+      <span class="tag">受控 AI（有引用、可追溯）</span>
+    </div>
+  </div>
+
+  <!-- 定位 -->
+  <div class="card" id="s0">
+    <h2>0 · 一句话定位与产品定义</h2>
+    <p class="tagline">「发现异常 → 组织证据 → 生成任务 → 执行复盘」的 KA 活动经营闭环。</p>
+    <p><span class="hl">快消智析平台</span>解决快消销售运营的核心痛点：<b>数据散落在 ERP / POS / SFA 多处，团队「看得见数字、却看不清问题、更追不上执行」</b>。</p>
+    <p style="margin-top:8px;">产品把经营链路拆成一条主流程：<b>数据底座 → AI 研判 → 业务执行 → AI 经营分析</b>。AI 的价值不在算数，而在<b>跨指标判断、证据组织与跟进建议</b>。</p>
+    <div class="flow">
+      <span class="step">数据底座</span><span class="arrow">→</span>
+      <span class="step">AI 研判</span><span class="arrow">→</span>
+      <span class="step">业务执行</span><span class="arrow">→</span>
+      <span class="step">AI 经营分析</span>
+    </div>
+    <div class="legend">
+      <span class="l-b">确定性计算（BI / 代码）</span>
+      <span class="l-a">AI 推断（受控、待验证）</span>
+      <span class="l-r">人工决策 / 执行</span>
+      <span class="l-g">证据链 / 可追溯</span>
+    </div>
+    <div class="note">设计红线：<b>AI 不自动下任务、不审批费用、不调整营销资源、不直接认定「经营不合格」</b>——只提示风险、组织证据、建议下一步；最终结论与行动由人负责。</div>
+  </div>
+
+  <!-- 用户流程 -->
+  <div class="card" id="s1">
+    <h2>1 · 用户流程（Human Flow）</h2>
+    <p>以「NKA 客户经理 / 经营管理者」为第一视角，六步闭环：</p>
+    <table>
+      <tr><th>步骤</th><th>用户动作</th><th>系统响应</th><th>产出</th></tr>
+      <tr><td><b>① 经营总览</b></td><td>打开驾驶舱，看重点活动、POS 覆盖、执行证据覆盖</td><td>汇总活动清单 + 覆盖/完整度门槛</td><td>「哪些活动值得跟进」</td></tr>
+      <tr><td><b>② 数据底座</b></td><td>确认关联键与数据来源、更新时间、完整度</td><td>展示 KA→活动→门店→日期→SKU 统一键 + 来源标注（真实/模拟）</td><td>可信的数据上下文</td></tr>
+      <tr><td><b>③ AI 研判</b></td><td>选中活动，触发「研判 / 核查」</td><td>返回 facts / gaps / hypotheses / checks / boundaries，逐条带 trace_id</td><td>有引用的待验证研判</td></tr>
+      <tr><td><b>④ 人工确认</b></td><td>核对进货价、费用归属，判断假设是否成立</td><td>展示「待验证」标注，等待人工决策</td><td>人拍板结论</td></tr>
+      <tr><td><b>⑤ 生成任务</b></td><td>把确认的核查项转成任务草稿（负责人/截止/证据清单）</td><td>创建「草稿」任务，状态机推进</td><td>可下发的执行任务</td></tr>
+      <tr><td><b>⑥ 执行复盘</b></td><td>补执行证据、完成复盘、回看效果</td><td>回填证据 → 覆盖度变化 → 再研判标注「效果待验证」</td><td>证据驱动的经营分析</td></tr>
+    </table>
+    <div class="note">关键交互约束：<b>AI 建议必须经人工确认后才能创建任务</b>；任务提交「待补证」前必须填证据、置「已完成」前必须填复盘结论。</div>
+  </div>
+
+  <!-- AI 流程 -->
+  <div class="card" id="s2">
+    <h2>2 · AI 流程（AI Flow）</h2>
+    <p>三种 AI 能力共用一套「受控研判」内核，统一走 Dify 工作流 + 输出契约校验：</p>
+    <table>
+      <tr><th>能力</th><th>触发</th><th>输入</th><th>输出</th></tr>
+      <tr><td><b>活动研判</b> <code>/activities/:id/reanalyze</code></td><td>选中活动点「研判」</td><td>该活动受控证据 JSON（facts / metrics / gaps / trace_ids）</td><td>受控研判（facts、gaps、hypotheses、checks、boundaries、summary）</td></tr>
+      <tr><td><b>核查 Agent</b> <code>/agents/investigate</code></td><td>输入具体核查问题</td><td>问题 + 工具规划（活动/门店POS/执行证据/费用）+ 执行 trace</td><td>多步工具调用后的受控研判</td></tr>
+      <tr><td><b>驾驶舱对话</b> <code>/dashboard/chat</code></td><td>当前筛选范围提问</td><td>scope + metrics + customers + sources + gaps（带 fingerprint）</td><td>基于当前上下文的有引用回答</td></tr>
+    </table>
+
+    <h3>Dify 工作流四段式（ka-activity-analysis.yml）</h3>
+    <div class="flow">
+      <span class="step">Start<br>受控证据输入</span><span class="arrow">→</span>
+      <span class="step">Code<br>证据门槛校验</span><span class="arrow">→</span>
+      <span class="step">LLM<br>DeepSeek 受控研判</span><span class="arrow">→</span>
+      <span class="step">Code<br>JSON+引用校验</span><span class="arrow">→</span>
+      <span class="step">End<br>返回研判</span>
+    </div>
+    <ul>
+      <li><b>门槛校验（normalize）</b>：校验 <code>data_version</code> 一致、<code>trace_ids</code> 非空，否则拒绝。</li>
+      <li><b>受控研判（llm）</b>：<code>deepseek-chat</code>，temperature=0.1，system prompt 强制「只用 evidence_json、不得重算经营数字、每条都要引用 trace_ids、假设标待验证、无库存不判缺货、无对照不称因果增量」。</li>
+      <li><b>输出校验（validate）</b>：强制合法 JSON、必填字段齐全、<b>所有 citation 必须来自输入的 trace_ids</b>，未知引用即拒绝整个结果。</li>
+    </ul>
+    <div class="note">失败保护：模型失败 / 输出非法 / 引用越界时，<b>保留确定性指标、不展示任何模板结论</b>，前端明确显示「Dify 尚未配置」或具体错误码。</div>
+  </div>
+
+  <!-- Context -->
+  <div class="card" id="s3">
+    <h2>3 · Context（上下文契约）</h2>
+    <p>AI 的上下文是<b>受控、可版本、可追溯</b>的，不直连生产库。两类上下文：</p>
+
+    <h3>3.1 活动研判上下文（由 <code>summarizeActivity</code> 确定性生成）</h3>
+    <table>
+      <tr><th>字段</th><th>内容</th><th>来源</th></tr>
+      <tr><td><code>activity</code></td><td>活动 id / 客户 / 名称 / 类型 / 起止 / 计划门店数 / 状态</td><td>活动计划</td></tr>
+      <tr><td><code>completeness</code></td><td>POS 门店覆盖 / 执行证据覆盖 / 是否有成本</td><td>确定性计算</td></tr>
+      <tr><td><code>gate</code></td><td>研判准入档位（normal / qualified / blocked）+ 原因</td><td>覆盖度阈值</td></tr>
+      <tr><td><code>facts / data_gaps</code></td><td>确定性事实、数据缺口清单</td><td>确定性计算</td></tr>
+      <tr><td><code>metrics</code></td><td>前/中/后三期 sales、qty、cost、margin，活动费用、贡献观察</td><td>POS + 费用</td></tr>
+      <tr><td><code>stores</code></td><td>每店三期销量 + POS 是否可得 + 证据状态</td><td>POS + 证据</td></tr>
+      <tr><td><code>trace_ids</code></td><td>本次可引用的全部证据 ID（引用白名单）</td><td>去重汇总</td></tr>
+    </table>
+
+    <h3>3.2 驾驶舱对话上下文（<code>normalizeDashboardContext</code>）</h3>
+    <table>
+      <tr><th>字段</th><th>说明</th></tr>
+      <tr><td><code>scope_fingerprint</code></td><td>当前筛选范围指纹，用于区分不同视图的会话</td></tr>
+      <tr><td><code>scope</code></td><td>日期范围 / 战区 / KA</td></tr>
+      <tr><td><code>metrics</code></td><td>销售额、利润、毛利率、销量、动销门店、总门店</td></tr>
+      <tr><td><code>customers / sources / gaps</code></td><td>客户指标、数据源标签、数据缺口（有数量上限防越界）</td></tr>
+      <tr><td><code>boundaries / trace_ids</code></td><td>固定边界声明 + 引用白名单</td></tr>
+    </table>
+    <div class="note">统一关联键：<code>KA → 活动 → 门店 → 日期 → SKU</code>。无库存数据时不判断缺货；无有效对照组时只能说「变化观察」。</div>
+  </div>
+
+  <!-- 状态机 -->
+  <div class="card" id="s4">
+    <h2>4 · 状态与状态机</h2>
+    <p>核心状态机是<b>任务生命周期</b>，严格单向推进，非法跳转被拒绝：</p>
+    <div class="flow">
+      <span class="step">草稿</span><span class="arrow">→</span>
+      <span class="step">已确认</span><span class="arrow">→</span>
+      <span class="step">执行中</span><span class="arrow">→</span>
+      <span class="step">待补证</span><span class="arrow">→</span>
+      <span class="step">已完成</span>
+    </div>
+    <div class="flow">
+      <span class="step">草稿</span><span class="arrow">→</span>
+      <span class="step" style="background:#fdf3f3;border-color:#f5c6c6;color:#a33;">已驳回（终态）</span>
+    </div>
+    <table>
+      <tr><th>状态</th><th>含义</th><th>允许的下一步</th><th>强制校验</th></tr>
+      <tr><td>草稿</td><td>AI 建议经人工确认后生成</td><td>已确认 / 已驳回</td><td>必填：活动、标题、负责人、截止日</td></tr>
+      <tr><td>已确认</td><td>已下发执行</td><td>执行中</td><td>—</td></tr>
+      <tr><td>执行中</td><td>执行推进中</td><td>待补证</td><td>—</td></tr>
+      <tr><td>待补证</td><td>执行反馈待补证据</td><td>已完成</td><td><b>必须填 proof（证据）</b></td></tr>
+      <tr><td>已完成</td><td>复盘闭环</td><td>—（终态）</td><td><b>必须填 review（复盘结论）</b></td></tr>
+      <tr><td>已驳回</td><td>人工否决</td><td>—（终态）</td><td>—</td></tr>
+    </table>
+
+    <h3>其他状态对象</h3>
+    <ul>
+      <li><b>研判记录（analyses）</b>：<code>success / blocked / failed</code> 三态，记录 data_version、问题、角色、结果或错误。</li>
+      <li><b>Agent 运行（agent_runs）</b>：<code>success / failed</code>，记录工具规划 plan 与执行 trace。</li>
+      <li><b>驾驶舱对话（dashboard_chats）</b>：<code>success / failed</code>，附 scope_fingerprint、反馈 decision、关联任务事件。</li>
+      <li><b>执行证据（evidence）</b>：新增即推进 <code>data_version</code>，覆盖度随之刷新。</li>
+      <li><b>数据版本（data_version）</b>：全局单调递增，任何写入（任务/证据/研判）都递增，保证 AI 结论可对账到某一数据快照。</li>
+    </ul>
+  </div>
+
+  <!-- 守护规则 -->
+  <div class="card" id="s5">
+    <h2>5 · 守护规则（Guardrails）</h2>
+    <table>
+      <tr><th>规则</th><th>阈值 / 条件</th><th>后果</th></tr>
+      <tr><td>POS 覆盖门槛</td><td>&lt; 80%</td><td><b>阻断经营假设</b>，只允许补数任务</td></tr>
+      <tr><td>POS 覆盖有限</td><td>80% — 95%</td><td>允许有限研判，结论<b>必须标「待验证」</b></td></tr>
+      <tr><td>缺模拟成本</td><td>成本不可得</td><td>只阻断<b>活动毛利/贡献</b>，不阻断销售观察</td></tr>
+      <tr><td>缺执行证据</td><td>覆盖 &lt; 95%</td><td>只阻断<b>执行质量判断</b></td></tr>
+      <tr><td>输出契约</td><td>缺字段 / 非 JSON / 引用未知 trace_id</td><td><b>拒绝整个 AI 结果</b>，保留确定性指标</td></tr>
+    </table>
+    <div class="guard">不可逾越红线：<b>AI 不自动下任务、不审批费用、不调整营销资源、不判缺货（无库存证据时）、不声称因果增量（无有效对照时）。</b></div>
+  </div>
+
+  <!-- 风险 -->
+  <div class="card" id="s6">
+    <h2>6 · 风险与对策</h2>
+    <table>
+      <tr><th>风险</th><th>等级</th><th>说明</th><th>对策</th></tr>
+      <tr><td>模型幻觉 / 引用越界</td><td class="risk">高</td><td>大模型可能生成未引用结论、编造数字</td><td>输出契约强制 citation ⊆ trace_ids，越界即拒绝；数字由代码算，模型不重算</td></tr>
+      <tr><td>数据口径不一致</td><td class="risk">高</td><td>门店/SKU 在 POS/SFA/ERP 编码不同</td><td>先做主数据映射，统一关联键，再喂 AI</td></tr>
+      <tr><td>因果归因误判</td><td class="risk">高</td><td>把自然波动当活动增量</td><td>无有效对照组只能「变化观察」，不称增量</td></tr>
+      <tr><td>证据不足仍下结论</td><td class="warn">中</td><td>POS/执行覆盖不足时强行判断</td><td>完整度门槛 + 分级阻断（守护规则）</td></tr>
+      <tr><td>密钥 / 数据泄露</td><td class="warn">中</td><td>浏览器持有 Dify 密钥、模型直连生产库</td><td>密钥只存服务端 .env；模型不直连生产数据库</td></tr>
+      <tr><td>越权操作</td><td class="warn">中</td><td>AI 自动下发任务/审批费用</td><td>人机协同边界：一切写操作需人工确认</td></tr>
+      <tr><td>样本不足致评测失真</td><td class="ok">低</td><td>样本 &lt; 20 时指标不可信</td><td>评测标注「样本积累中」，满 20 才形成首版指标</td></tr>
+      <tr><td>演示与真实混淆</td><td class="ok">低</td><td>面试场景把模拟当真实</td><td>诚信边界：真实样例 vs 匿名模拟 显式标注</td></tr>
+    </table>
+  </div>
+
+  <!-- 评测 -->
+  <div class="card" id="s7">
+    <h2>7 · 评测体系（Evaluation）</h2>
+    <p>以<b>人工反馈闭环</b>为核心，量化「AI 建议是否被采纳、是否转化为行动」：</p>
+    <h3>7.1 核心指标（summarizeEvaluation）</h3>
+    <table>
+      <tr><th>指标</th><th>定义</th><th>口径</th></tr>
+      <tr><td>采纳率 adoption_rate</td><td>(直接采纳 + 修改后采纳) / 已评价成功回答</td><td>越高越好</td></tr>
+      <tr><td>任务生成率 task_creation_rate</td><td>已创建任务数 / 被采纳回答数</td><td>AI→行动转化</td></tr>
+      <tr><td>任务完成率 task_completion_rate</td><td>已完成任务数 / 已创建任务数</td><td>闭环质量</td></tr>
+      <tr><td>坏例数 bad_case_count</td><td>修改 + 否决 + 失败</td><td>越低越好</td></tr>
+      <tr><td>平均响应时长 average_response_ms</td><td>成功回答平均耗时</td><td>体验指标</td></tr>
+      <tr><td>成功率 successful_runs</td><td>成功 / 全部运行</td><td>稳定性</td></tr>
+    </table>
+    <h3>7.2 反馈决策三态</h3>
+    <div class="legend">
+      <span class="l-g">adopted 直接采纳</span>
+      <span class="l-a">modified 修改后采纳</span>
+      <span class="l-r">rejected 否决（须填原因）</span>
+    </div>
+    <p>修改后采纳 / 否决<b>必须填原因码 + 说明</b>，形成可归因的坏例库。</p>
+    <div class="note">首版指标门槛：<b>累计 ≥ 20 条已评价样本</b>才形成「首版指标」；此前统一标注「样本积累中」，避免小样本误导决策。</div>
+  </div>
+
+  <!-- MVP -->
+  <div class="card" id="s8">
+    <h2>8 · MVP 范围（含边界）</h2>
+    <h3>8.1 已确认（本次 Demo 落地）</h3>
+    <table>
+      <tr><th>模块</th><th>内容</th></tr>
+      <tr><td>数据底座</td><td>统一关联键、真实样例（NKA 聚合）+ 匿名模拟（活动/POS/费用/证据）双轨，来源与更新时间标注</td></tr>
+      <tr><td>经营总览</td><td>重点活动、POS 覆盖、执行证据覆盖、活动贡献观察</td></tr>
+      <tr><td>AI 研判</td><td>受控 Dify 工作流（有引用、待验证、边界声明）+ 失败保护</td></tr>
+      <tr><td>核查 Agent</td><td>四工具（活动/门店POS/执行证据/费用）规划 + 执行 trace</td></tr>
+      <tr><td>驾驶舱对话</td><td>基于当前筛选范围的上下文问答</td></tr>
+      <tr><td>业务执行</td><td>任务状态机（草稿→已确认→执行中→待补证→已完成）+ 证据补录</td></tr>
+      <tr><td>评测</td><td>反馈三态 + 指标汇总 + 样本门槛</td></tr>
+    </table>
+    <h3>8.2 未完成 / 待接入（诚实边界）</h3>
+    <ul>
+      <li>真实佳农 BI API 与数据字典确认（当前为 Mock BI 服务）。</li>
+      <li>本地 Dify 工作流首次导入、模型节点确认、发布与密钥配置。</li>
+      <li>真实 SFA / CRM 任务下发与证据对象存储。</li>
+      <li>有效对照 / 实验设计及经业务验收的效果指标。</li>
+    </ul>
+  </div>
+
+  <!-- 架构 -->
+  <div class="card" id="s9">
+    <h2>9 · 技术架构与生产替换路径</h2>
+    <table>
+      <tr><th>层</th><th>当前（Demo）</th><th>生产替换</th></tr>
+      <tr><td>数据读取</td><td>Mock BI 服务 + 匿名 fixture</td><td>佳农 BI / 数仓服务账号查询</td></tr>
+      <tr><td>任务状态</td><td>本地 JSON（state-store）</td><td>SFA / CRM 任务 API</td></tr>
+      <tr><td>证据存储</td><td>本地 JSON</td><td>对象存储（OSS/S3）</td></tr>
+      <tr><td>AI 调用</td><td>Dify Workflow（DeepSeek）</td><td>保持 Dify 输入/输出契约不变</td></tr>
+      <tr><td>密钥</td><td>服务端 .env（不提交）</td><td>服务端密钥管理（Vault/KMS）</td></tr>
+    </table>
+    <p style="margin-top:10px;"><b>关键原则</b>：保持页面与 Dify 输入/输出契约不变，只替换数据与状态后端；模型始终不直连生产数据库，密钥只存服务端。</p>
+  </div>
+
+  <!-- 路线图 -->
+  <div class="card" id="s10">
+    <h2>10 · 落地路线图</h2>
+    <table>
+      <tr><th>阶段</th><th>目标</th><th>交付</th></tr>
+      <tr><td><b>M0 已完成</b></td><td>受控 AI 闭环可演示</td><td>数据底座 + 研判 + 任务状态机 + 评测</td></tr>
+      <tr><td><b>M1 接入真实数据</b></td><td>接通佳农 BI</td><td>数据字典确认、门店/SKU 映射、服务账号查询</td></tr>
+      <tr><td><b>M2 打通执行系统</b></td><td>任务落地 SFA/CRM</td><td>任务下发、证据对象存储、闭环</td></tr>
+      <tr><td><b>M3 效果验证</b></td><td>实验对照 + 业务验收</td><td>有效对照组、经验收的效果指标、迭代评测</td></tr>
+    </table>
+  </div>
+
+  <div class="foot">快消智析平台 · 产品蓝图 PRD · 面试 Demo 版 · 生成于 2026-10-18</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BI vs AI · 分角色价值</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;font-family:"PingFang SC","Microsoft YaHei",sans-serif;}
+  :root{--primary:#2f6bff;--bg:#f4f7fc;--card:#fff;--line:#e8edf5;--txt:#1f2a44;--sub:#5c6b8a;--ok:#2ba471;--risk:#e34d4d;--warn:#f5a623;}
+  body{background:var(--bg);color:var(--txt);line-height:1.7;}
+  .wrap{max-width:980px;margin:0 auto;padding:30px 20px 80px;}
+  .hero{background:linear-gradient(135deg,#2f6bff,#6a8fff);color:#fff;border-radius:16px;padding:32px 34px;margin-bottom:22px;}
+  .hero h1{font-size:24px;font-weight:700;margin-bottom:8px;}
+  .hero .sub{font-size:14px;opacity:.94;max-width:760px;}
+  .conclusion{background:#fff8ec;border:1px solid #ffe0a8;border-radius:12px;padding:16px 20px;margin-bottom:20px;font-size:14px;color:#6b5717;text-align:center;}
+  .conclusion b{color:#8a6d1f;font-size:15px;}
+  .role{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px 24px;margin-bottom:16px;}
+  .role .head{display:flex;align-items:center;gap:12px;margin-bottom:14px;}
+  .role .who{font-size:16px;font-weight:700;}
+  .role .pain{font-size:12px;color:var(--sub);background:#f2f5fb;padding:3px 12px;border-radius:16px;}
+  table{width:100%;border-collapse:collapse;font-size:13px;}
+  th,td{border:1px solid var(--line);padding:10px 13px;text-align:left;vertical-align:top;}
+  th{background:#f6f9ff;color:var(--txt);font-weight:600;white-space:nowrap;width:110px;}
+  td{color:var(--sub);}
+  .val{background:#f0f7ff;border-radius:8px;padding:10px 13px;margin-top:12px;font-size:13px;color:var(--txt);}
+  .val b{color:var(--primary);}
+  .chain{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:24px 26px;margin-top:8px;}
+  .chain h2{font-size:17px;font-weight:700;margin-bottom:16px;padding-left:11px;border-left:4px solid var(--primary);}
+  .steps{display:flex;gap:10px;align-items:stretch;flex-wrap:wrap;}
+  .step{flex:1;min-width:200px;border-radius:12px;padding:18px 20px;}
+  .s-bi{background:#eef3ff;border:1px solid #d4e0ff;}
+  .s-ai{background:#e9f7ef;border:1px solid #bfe6d0;}
+  .s-human{background:#fff5e6;border:1px solid #ffe0a8;}
+  .step .t{font-size:16px;font-weight:700;margin-bottom:6px;}
+  .s-bi .t{color:var(--primary);}
+  .s-ai .t{color:var(--ok);}
+  .s-human .t{color:#b97a10;}
+  .step .d{font-size:12.5px;color:var(--sub);}
+  .foot{text-align:center;color:#9aa7bf;font-size:12px;margin-top:28px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="hero">
+    <h1>为什么「不能只要 BI」· 分角色价值</h1>
+    <div class="sub">BI 回答「发生了什么」，AI 回答「该看谁、为什么、下一步做什么」。AI 不是取代 BI，而是站在 BI 之上。</div>
+  </div>
+
+  <div class="conclusion">
+    <b>BI 算数 · AI 判数 · 人来定夺</b> —— 数字对交给 BI，判断有证据交给 AI，责任清晰交给人。
+  </div>
+
+  <div class="role">
+    <div class="head">
+      <span class="who">NKA 客户经理</span>
+      <span class="pain">痛点：13 个 KA 看不过来</span>
+    </div>
+    <table>
+      <tr><th>只有 BI</th><td>13 个 KA 各自一张看板，一个个点开看；看到盒马毛利降了，但不知道为什么。</td></tr>
+      <tr><th>加了 AI</th><td>自动筛出「哪个 KA 本周异常」；给出待验证归因 + 证据缺口；生成核查任务草稿，确认即下发。</td></tr>
+    </table>
+    <div class="val"><b>核心价值：筛客户</b> —— 从「13 个都要盯」变成「只盯 2 个出问题的」，备好证据去跟总部谈。</div>
+  </div>
+
+  <div class="role">
+    <div class="head">
+      <span class="who">KA 销售</span>
+      <span class="pain">痛点：知道销量不行、不知道去干嘛</span>
+    </div>
+    <table>
+      <tr><th>只有 BI</th><td>看得到「这家店销量下滑」，但不知道是自己没做好还是市场问题，凭经验决定今天去哪几家。</td></tr>
+      <tr><th>加了 AI</th><td>关联「执行证据缺失」；提示「缺陈列核验，去补证」；给按优先级排好的核查任务 + 截止日。</td></tr>
+    </table>
+    <div class="val"><b>核心价值：备证据 / 给动作</b> —— 把「销量不行」翻译成「这家店缺陈列核验、这几家要补 POS，先办 A 再办 B」。</div>
+  </div>
+
+  <div class="role">
+    <div class="head">
+      <span class="who">战区总监</span>
+      <span class="pain">痛点：知道不达标、不知道哪环节</span>
+    </div>
+    <table>
+      <tr><th>只有 BI</th><td>看战区大盘 KPI，难定位「价格 / 成本 / 执行」哪个环节出问题，凭感觉调资源。</td></tr>
+      <tr><th>加了 AI</th><td>跨「销售 + 执行 + 费用」交叉研判；分环节给待验证假设；给证据支撑的资源建议，人拍板。</td></tr>
+    </table>
+    <div class="val"><b>核心价值：证归因</b> —— 「哪些假设还没证实、补哪些证据就能下结论」，避免把资源押在没验证的判断上。</div>
+  </div>
+
+  <div class="chain">
+    <h2>贯穿三者的底层分工链</h2>
+    <div class="steps">
+      <div class="step s-bi">
+        <div class="t">BI 算数</div>
+        <div class="d">销售额、毛利、覆盖率由代码确定性计算，保证「数字对」，永不交给模型。</div>
+      </div>
+      <div class="step s-ai">
+        <div class="t">AI 判数</div>
+        <div class="d">跨指标筛异常、组织证据、给跟进建议，每条引用 trace_id，假设标「待验证」。</div>
+      </div>
+      <div class="step s-human">
+        <div class="t">人来定夺</div>
+        <div class="d">核对证据、拍板、执行。AI 不越权、不下结论、不自动下任务，责任清晰。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot">快消智析平台 · BI vs AI 分角色价值 · 生成于 2026-10-18</div>
+</div>
+</body>
+</html>

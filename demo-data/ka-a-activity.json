@@ -1,0 +1,130 @@
+{
+  "dataset_version": 1,
+  "as_of": "2026-10-21T08:00:00+08:00",
+  "source_type": "anonymous_simulation",
+  "ka_customers": [{"id":"KA-A","name":"KA-A（匿名模拟）","region":"华东战区"}],
+  "skus": [
+    {"id":"SKU-G18","name":"金果18#","category":"金果","unit_cost":7.2},
+    {"id":"SKU-G22","name":"金果22#","category":"金果","unit_cost":6.4}
+  ],
+  "stores": [
+    {"id":"STORE-A01","ka_id":"KA-A","name":"A01门店"},{"id":"STORE-A02","ka_id":"KA-A","name":"A02门店"},
+    {"id":"STORE-A03","ka_id":"KA-A","name":"A03门店"},{"id":"STORE-A04","ka_id":"KA-A","name":"A04门店"},
+    {"id":"STORE-A05","ka_id":"KA-A","name":"A05门店"},{"id":"STORE-A06","ka_id":"KA-A","name":"A06门店"},
+    {"id":"STORE-A07","ka_id":"KA-A","name":"A07门店"},{"id":"STORE-A08","ka_id":"KA-A","name":"A08门店"},
+    {"id":"STORE-A09","ka_id":"KA-A","name":"A09门店"},{"id":"STORE-A10","ka_id":"KA-A","name":"A10门店"},
+    {"id":"STORE-A11","ka_id":"KA-A","name":"A11门店"},{"id":"STORE-A12","ka_id":"KA-A","name":"A12门店"},
+    {"id":"STORE-HD","ka_id":"KA-A","ka_system":"大润发","name":"上海市·浦东新区·大润发·沪东店","grade":"A","region":"华东战区"},
+    {"id":"STORE-DRF-02","ka_id":"KA-A","ka_system":"大润发","name":"上海市·浦东新区·大润发·张江店","grade":"A","region":"华东战区"},
+    {"id":"STORE-DRF-03","ka_id":"KA-A","ka_system":"大润发","name":"上海市·杨浦区·大润发·杨浦店","grade":"A","region":"华东战区"},
+    {"id":"STORE-DRF-04","ka_id":"KA-A","ka_system":"大润发","name":"上海市·闵行区·大润发·春申店","grade":"A","region":"华东战区"},
+    {"id":"STORE-DRF-05","ka_id":"KA-A","ka_system":"大润发","name":"上海市·宝山区·大润发·大华店","grade":"A","region":"华东战区"},
+    {"id":"STORE-DRF-06","ka_id":"KA-A","ka_system":"大润发","name":"上海市·嘉定区·大润发·嘉定店","grade":"A","region":"华东战区"},
+    {"id":"STORE-YH-01","ka_id":"KA-A","ka_system":"永辉","name":"上海市·浦东新区·永辉·金桥店","grade":"A","region":"华东战区"},
+    {"id":"STORE-YH-02","ka_id":"KA-A","ka_system":"永辉","name":"上海市·闵行区·永辉·龙湖店","grade":"A","region":"华东战区"}
+  ],
+  "activities": [{
+    "id":"ACT-KA-A-001","ka_id":"KA-A","name":"金果周末推广活动（匿名模拟）","type":"临促＋路演",
+    "start_date":"2026-10-01","end_date":"2026-10-14","before_start":"2026-09-15","before_end":"2026-09-30",
+    "after_start":"2026-10-15","after_end":"2026-10-21","planned_store_ids":["STORE-A01","STORE-A02","STORE-A03","STORE-A04","STORE-A05","STORE-A06","STORE-A07","STORE-A08","STORE-A09","STORE-A10","STORE-A11","STORE-A12"],
+    "budget":36000,"status":"复盘中","trace_id":"TR-ACT-001"
+  }],
+  "pos_daily": [
+    {"date":"2026-09-24","store_id":"STORE-A01","sku_id":"SKU-G18","qty":110,"sales":1100,"trace_id":"TR-POS-B01"},{"date":"2026-10-06","store_id":"STORE-A01","sku_id":"SKU-G18","qty":145,"sales":1450,"trace_id":"TR-POS-D01"},{"date":"2026-10-18","store_id":"STORE-A01","sku_id":"SKU-G18","qty":122,"sales":1220,"trace_id":"TR-POS-A01"},
+    {"date":"2026-09-24","store_id":"STORE-A02","sku_id":"SKU-G22","qty":105,"sales":945,"trace_id":"TR-POS-B02"},{"date":"2026-10-06","store_id":"STORE-A02","sku_id":"SKU-G22","qty":137,"sales":1233,"trace_id":"TR-POS-D02"},{"date":"2026-10-18","store_id":"STORE-A02","sku_id":"SKU-G22","qty":117,"sales":1053,"trace_id":"TR-POS-A02"},
+    {"date":"2026-09-24","store_id":"STORE-A03","sku_id":"SKU-G18","qty":98,"sales":980,"trace_id":"TR-POS-B03"},{"date":"2026-10-06","store_id":"STORE-A03","sku_id":"SKU-G18","qty":130,"sales":1300,"trace_id":"TR-POS-D03"},{"date":"2026-10-18","store_id":"STORE-A03","sku_id":"SKU-G18","qty":109,"sales":1090,"trace_id":"TR-POS-A03"},
+    {"date":"2026-09-24","store_id":"STORE-A04","sku_id":"SKU-G22","qty":92,"sales":828,"trace_id":"TR-POS-B04"},{"date":"2026-10-06","store_id":"STORE-A04","sku_id":"SKU-G22","qty":125,"sales":1125,"trace_id":"TR-POS-D04"},{"date":"2026-10-18","store_id":"STORE-A04","sku_id":"SKU-G22","qty":102,"sales":918,"trace_id":"TR-POS-A04"},
+    {"date":"2026-09-24","store_id":"STORE-A05","sku_id":"SKU-G18","qty":115,"sales":1150,"trace_id":"TR-POS-B05"},{"date":"2026-10-06","store_id":"STORE-A05","sku_id":"SKU-G18","qty":150,"sales":1500,"trace_id":"TR-POS-D05"},{"date":"2026-10-18","store_id":"STORE-A05","sku_id":"SKU-G18","qty":128,"sales":1280,"trace_id":"TR-POS-A05"},
+    {"date":"2026-09-24","store_id":"STORE-A06","sku_id":"SKU-G22","qty":100,"sales":900,"trace_id":"TR-POS-B06"},{"date":"2026-10-06","store_id":"STORE-A06","sku_id":"SKU-G22","qty":132,"sales":1188,"trace_id":"TR-POS-D06"},{"date":"2026-10-18","store_id":"STORE-A06","sku_id":"SKU-G22","qty":111,"sales":999,"trace_id":"TR-POS-A06"},
+    {"date":"2026-09-24","store_id":"STORE-A07","sku_id":"SKU-G18","qty":108,"sales":1080,"trace_id":"TR-POS-B07"},{"date":"2026-10-06","store_id":"STORE-A07","sku_id":"SKU-G18","qty":142,"sales":1420,"trace_id":"TR-POS-D07"},{"date":"2026-10-18","store_id":"STORE-A07","sku_id":"SKU-G18","qty":120,"sales":1200,"trace_id":"TR-POS-A07"},
+    {"date":"2026-09-24","store_id":"STORE-A08","sku_id":"SKU-G22","qty":95,"sales":855,"trace_id":"TR-POS-B08"},{"date":"2026-10-06","store_id":"STORE-A08","sku_id":"SKU-G22","qty":129,"sales":1161,"trace_id":"TR-POS-D08"},{"date":"2026-10-18","store_id":"STORE-A08","sku_id":"SKU-G22","qty":105,"sales":945,"trace_id":"TR-POS-A08"},
+    {"date":"2026-09-24","store_id":"STORE-A09","sku_id":"SKU-G18","qty":102,"sales":1020,"trace_id":"TR-POS-B09"},{"date":"2026-10-06","store_id":"STORE-A09","sku_id":"SKU-G18","qty":135,"sales":1350,"trace_id":"TR-POS-D09"},{"date":"2026-10-18","store_id":"STORE-A09","sku_id":"SKU-G18","qty":112,"sales":1120,"trace_id":"TR-POS-A09"},
+    {"date":"2026-09-24","store_id":"STORE-A10","sku_id":"SKU-G22","qty":96,"sales":864,"trace_id":"TR-POS-B10"},{"date":"2026-10-06","store_id":"STORE-A10","sku_id":"SKU-G22","qty":82,"sales":738,"trace_id":"TR-POS-D10"},{"date":"2026-10-18","store_id":"STORE-A10","sku_id":"SKU-G22","qty":91,"sales":819,"trace_id":"TR-POS-A10"},
+    {"date":"2026-09-24","store_id":"STORE-A11","sku_id":"SKU-G18","qty":104,"sales":1040,"trace_id":"TR-POS-B11"},{"date":"2026-10-06","store_id":"STORE-A11","sku_id":"SKU-G18","qty":126,"sales":1260,"trace_id":"TR-POS-D11"},{"date":"2026-10-18","store_id":"STORE-A11","sku_id":"SKU-G18","qty":108,"sales":1080,"trace_id":"TR-POS-A11"},
+    {"date":"2026-09-24","store_id":"STORE-A12","sku_id":"SKU-G22","qty":99,"sales":891,"trace_id":"TR-POS-B12"},{"date":"2026-10-06","store_id":"STORE-A12","sku_id":"SKU-G22","qty":121,"sales":1089,"trace_id":"TR-POS-D12"},{"date":"2026-10-18","store_id":"STORE-A12","sku_id":"SKU-G22","qty":103,"sales":927,"trace_id":"TR-POS-A12"}
+  ],
+  "marketing_resources": [
+    {"id":"RES-LONG-01","activity_id":"ACT-KA-A-001","type":"长促","planned":2,"actual":2,"expense":9000,"trace_id":"TR-RES-001"},
+    {"id":"RES-TEMP-01","activity_id":"ACT-KA-A-001","type":"临促","planned":8,"actual":7,"expense":4800,"trace_id":"TR-RES-002"},
+    {"id":"RES-ROAD-01","activity_id":"ACT-KA-A-001","type":"路演","planned":1,"actual":1,"expense":20000,"trace_id":"TR-RES-003"}
+  ],
+  "execution_evidence": [
+    {"id":"EV-001","activity_id":"ACT-KA-A-001","store_id":"STORE-A01","type":"到岗与陈列","status":"已核验","submitted_at":"2026-10-06T18:20:00+08:00","note":"匿名模拟证据：人员到岗，陈列完成","trace_id":"TR-EV-001"},
+    {"id":"EV-002","activity_id":"ACT-KA-A-001","store_id":"STORE-A02","type":"到岗与陈列","status":"已核验","submitted_at":"2026-10-06T18:22:00+08:00","note":"匿名模拟证据：人员到岗，陈列完成","trace_id":"TR-EV-002"},
+    {"id":"EV-003","activity_id":"ACT-KA-A-001","store_id":"STORE-A03","type":"到岗与陈列","status":"已核验","submitted_at":"2026-10-06T18:30:00+08:00","note":"匿名模拟证据：人员到岗，陈列完成","trace_id":"TR-EV-003"},
+    {"id":"EV-004","activity_id":"ACT-KA-A-001","store_id":"STORE-A04","type":"到岗与陈列","status":"已核验","submitted_at":"2026-10-06T18:31:00+08:00","note":"匿名模拟证据：人员到岗，陈列完成","trace_id":"TR-EV-004"},
+    {"id":"EV-005","activity_id":"ACT-KA-A-001","store_id":"STORE-A05","type":"到岗与陈列","status":"已核验","submitted_at":"2026-10-06T18:35:00+08:00","note":"匿名模拟证据：人员到岗，陈列完成","trace_id":"TR-EV-005"},
+    {"id":"EV-006","activity_id":"ACT-KA-A-001","store_id":"STORE-A06","type":"到岗与陈列","status":"待补证","submitted_at":"2026-10-06T18:40:00+08:00","note":"匿名模拟证据：有到岗记录，缺陈列核验","trace_id":"TR-EV-006"},
+    {"id":"EV-007","activity_id":"ACT-KA-A-001","store_id":"STORE-A07","type":"到岗与陈列","status":"已核验","submitted_at":"2026-10-06T18:45:00+08:00","note":"匿名模拟证据：人员到岗，陈列完成","trace_id":"TR-EV-007"},
+    {"id":"EV-008","activity_id":"ACT-KA-A-001","store_id":"STORE-A08","type":"到岗与陈列","status":"已核验","submitted_at":"2026-10-06T18:47:00+08:00","note":"匿名模拟证据：人员到岗，陈列完成","trace_id":"TR-EV-008"},
+    {"id":"EV-009","activity_id":"ACT-KA-A-001","store_id":"STORE-A09","type":"到岗与陈列","status":"已核验","submitted_at":"2026-10-06T18:50:00+08:00","note":"匿名模拟证据：人员到岗，陈列完成","trace_id":"TR-EV-009"}
+  ],
+  "erp_shipments": [
+    {"activity_id":"ACT-KA-A-001","store_id":"STORE-A10","sku_id":"SKU-G22","planned_qty":100,"shipped_qty":100,"returned_qty":0,"trace_id":"TR-ERP-A10"}
+  ],
+  "promoter_shifts": [
+    {"activity_id":"ACT-KA-A-001","store_id":"STORE-A10","planned_minutes":480,"present_minutes":326,"long_absence_minutes":92,"knowledge_score":78,"customer_service_score":72,"trace_id":"TR-PROM-A10"}
+  ],
+  "sfa_visits": [
+    {"activity_id":"ACT-KA-A-001","store_id":"STORE-A10","visited_at":"2026-10-06T15:20:00+08:00","promoter_present":false,"note":"匿名模拟：巡店时促销员离岗，已要求返回岗位","trace_id":"TR-SFA-A10"}
+  ],
+  "display_checks": [
+    {"activity_id":"ACT-KA-A-001","store_id":"STORE-A10","planned_location":"入口堆头","actual_location":"果蔬区普通货架","planned_area_sqm":4,"actual_area_sqm":2.4,"planned_skus":2,"active_skus":2,"price_compliant":true,"trace_id":"TR-DISPLAY-A10"}
+  ],
+  "quality_checks": [
+    {"activity_id":"ACT-KA-A-001","store_id":"STORE-A10","hardness":"合格","brix":14.2,"damage_rate":1.8,"promoter_note":"匿名模拟：试吃果成熟度正常，少量顾客认为偏酸","trace_id":"TR-QUALITY-A10"}
+  ],
+  "store_activity_history": [
+    {"store_id":"STORE-A10","past_activity_count":3,"average_execution_score":86,"average_pos_lift_pct":18.0,"trace_id":"TR-HISTORY-A10"}
+  ],
+  "competitor_events": [
+    {"store_id":"STORE-A10","radius_km":2,"event":"其他KA新店开业促销","start_date":"2026-10-05","end_date":"2026-10-10","source":"受控商圈事件台账（匿名模拟）","trace_id":"TR-COMP-A10"}
+  ],
+  "weekend_promo_cycles": [
+    {"id":"PROMO-WK14","label":"WK14周末临促","start_date":"2026-10-17","end_date":"2026-10-18","pos_as_of":"2026-10-19 08:00","pos_latency":"T+1","planned_days":2,"daily_target_yuan":5000,"target_rule":"演示规则：A类临促门店单日POS销售额目标5000元；正式上线后由营销部门配置","store_ids":["STORE-HD","STORE-DRF-02","STORE-DRF-03","STORE-DRF-04","STORE-DRF-05","STORE-DRF-06","STORE-YH-01","STORE-YH-02"]}
+  ],
+  "weekend_promo_results": [
+    {"cycle_id":"PROMO-WK14","store_id":"STORE-HD","current_pos":7200,"previous_pos":8500,"saturday_pos":4200,"sunday_pos":3000,"trace_id":"TR-WK14-POS-HD"},
+    {"cycle_id":"PROMO-WK14","store_id":"STORE-DRF-02","current_pos":10000,"previous_pos":9300,"saturday_pos":5200,"sunday_pos":4800,"trace_id":"TR-WK14-POS-02"},
+    {"cycle_id":"PROMO-WK14","store_id":"STORE-DRF-03","current_pos":10200,"previous_pos":9500,"saturday_pos":5300,"sunday_pos":4900,"trace_id":"TR-WK14-POS-03"},
+    {"cycle_id":"PROMO-WK14","store_id":"STORE-DRF-04","current_pos":10400,"previous_pos":9700,"saturday_pos":5400,"sunday_pos":5000,"trace_id":"TR-WK14-POS-04"},
+    {"cycle_id":"PROMO-WK14","store_id":"STORE-DRF-05","current_pos":10600,"previous_pos":9800,"saturday_pos":5500,"sunday_pos":5100,"trace_id":"TR-WK14-POS-05"},
+    {"cycle_id":"PROMO-WK14","store_id":"STORE-DRF-06","current_pos":10800,"previous_pos":10100,"saturday_pos":5600,"sunday_pos":5200,"trace_id":"TR-WK14-POS-06"},
+    {"cycle_id":"PROMO-WK14","store_id":"STORE-YH-01","current_pos":11000,"previous_pos":10300,"saturday_pos":5700,"sunday_pos":5300,"trace_id":"TR-WK14-POS-07"},
+    {"cycle_id":"PROMO-WK14","store_id":"STORE-YH-02","current_pos":11200,"previous_pos":10500,"saturday_pos":5800,"sunday_pos":5400,"trace_id":"TR-WK14-POS-08"}
+  ],
+  "store_pos_monthly": [
+    {"store_id":"STORE-HD","month":"2026-08","sales":137000,"data_as_of":"2026-09-01 08:00","latency":"T+1","trace_id":"TR-POS-MONTHLY-HD-2026-08"},
+    {"store_id":"STORE-HD","month":"2026-09","sales":126000,"data_as_of":"2026-10-01 08:00","latency":"T+1","trace_id":"TR-POS-MONTHLY-HD-2026-09"},
+    {"store_id":"STORE-HD","month":"2026-10","sales":82000,"data_as_of":"2026-10-19 08:00","latency":"T+1且本月未完结","trace_id":"TR-POS-MONTHLY-HD-2026-10"}
+  ],
+  "weekend_promo_resources": [
+    {"cycle_id":"PROMO-WK14","store_id":"STORE-HD","promoter_count":1,"planned_days":2,"actual_days":2,"cost":800,"trace_id":"TR-WK14-RES-HD"},
+    {"cycle_id":"PROMO-WK14","store_id":"STORE-DRF-02","promoter_count":1,"planned_days":2,"actual_days":2,"cost":800,"trace_id":"TR-WK14-RES-02"},
+    {"cycle_id":"PROMO-WK14","store_id":"STORE-DRF-03","promoter_count":1,"planned_days":2,"actual_days":2,"cost":800,"trace_id":"TR-WK14-RES-03"},
+    {"cycle_id":"PROMO-WK14","store_id":"STORE-DRF-04","promoter_count":1,"planned_days":2,"actual_days":2,"cost":800,"trace_id":"TR-WK14-RES-04"},
+    {"cycle_id":"PROMO-WK14","store_id":"STORE-DRF-05","promoter_count":1,"planned_days":2,"actual_days":2,"cost":800,"trace_id":"TR-WK14-RES-05"},
+    {"cycle_id":"PROMO-WK14","store_id":"STORE-DRF-06","promoter_count":1,"planned_days":2,"actual_days":2,"cost":800,"trace_id":"TR-WK14-RES-06"},
+    {"cycle_id":"PROMO-WK14","store_id":"STORE-YH-01","promoter_count":1,"planned_days":2,"actual_days":2,"cost":800,"trace_id":"TR-WK14-RES-07"},
+    {"cycle_id":"PROMO-WK14","store_id":"STORE-YH-02","promoter_count":1,"planned_days":2,"actual_days":2,"cost":800,"trace_id":"TR-WK14-RES-08"}
+  ],
+  "weekend_promo_sfa": [
+    {"cycle_id":"PROMO-WK14","store_id":"STORE-HD","visited_at":"2026-10-18T14:20:00+08:00","visitor_role":"华东战区销售","visit_status":"已完成","display_position":"果蔬区普通货架","display_area_sqm":2,"distributed_skus":4,"price_compliant":true,"brand_material":true,"promoter_present":true,"quality_feedback":"促销员反馈奇异果口感偏酸，未记录糖度","promoter_issue":"周日陈列面积未恢复至计划水平","action_note":"建议复核陈列面积、位置与果品质量","trace_id":"TR-WK14-SFA-HD"},
+    {"cycle_id":"PROMO-WK14","store_id":"STORE-DRF-02","visited_at":"2026-10-18T13:10:00+08:00","visitor_role":"KA销售","visit_status":"已完成","display_position":"入口堆头","display_area_sqm":4,"distributed_skus":6,"price_compliant":true,"brand_material":true,"promoter_present":true,"quality_feedback":"品质正常","promoter_issue":"无","action_note":"保持执行","trace_id":"TR-WK14-SFA-02"},
+    {"cycle_id":"PROMO-WK14","store_id":"STORE-DRF-03","visited_at":"2026-10-18T15:00:00+08:00","visitor_role":"KA销售","visit_status":"已完成","display_position":"主通道","display_area_sqm":4,"distributed_skus":6,"price_compliant":true,"brand_material":true,"promoter_present":true,"quality_feedback":"品质正常","promoter_issue":"无","action_note":"保持执行","trace_id":"TR-WK14-SFA-03"},
+    {"cycle_id":"PROMO-WK14","store_id":"STORE-DRF-04","visited_at":"2026-10-18T15:30:00+08:00","visitor_role":"战区销售","visit_status":"已完成","display_position":"入口堆头","display_area_sqm":4.5,"distributed_skus":7,"price_compliant":true,"brand_material":true,"promoter_present":true,"quality_feedback":"品质正常","promoter_issue":"无","action_note":"保持执行","trace_id":"TR-WK14-SFA-04"},
+    {"cycle_id":"PROMO-WK14","store_id":"STORE-DRF-05","visited_at":"2026-10-18T16:00:00+08:00","visitor_role":"KA销售","visit_status":"已完成","display_position":"入口堆头","display_area_sqm":4,"distributed_skus":6,"price_compliant":true,"brand_material":true,"promoter_present":true,"quality_feedback":"品质正常","promoter_issue":"无","action_note":"保持执行","trace_id":"TR-WK14-SFA-05"},
+    {"cycle_id":"PROMO-WK14","store_id":"STORE-DRF-06","visited_at":"2026-10-18T16:30:00+08:00","visitor_role":"战区销售","visit_status":"已完成","display_position":"主通道","display_area_sqm":5,"distributed_skus":7,"price_compliant":true,"brand_material":true,"promoter_present":true,"quality_feedback":"品质正常","promoter_issue":"无","action_note":"保持执行","trace_id":"TR-WK14-SFA-06"},
+    {"cycle_id":"PROMO-WK14","store_id":"STORE-YH-01","visited_at":"2026-10-18T14:40:00+08:00","visitor_role":"KA销售","visit_status":"已完成","display_position":"主通道","display_area_sqm":4,"distributed_skus":6,"price_compliant":true,"brand_material":true,"promoter_present":true,"quality_feedback":"品质正常","promoter_issue":"无","action_note":"保持执行","trace_id":"TR-WK14-SFA-07"},
+    {"cycle_id":"PROMO-WK14","store_id":"STORE-YH-02","visited_at":"2026-10-18T15:40:00+08:00","visitor_role":"KA销售","visit_status":"已完成","display_position":"入口堆头","display_area_sqm":4.5,"distributed_skus":7,"price_compliant":true,"brand_material":true,"promoter_present":true,"quality_feedback":"品质正常","promoter_issue":"无","action_note":"保持执行","trace_id":"TR-WK14-SFA-08"}
+  ],
+  "data_sources": [
+    {"id":"SRC-NKA","name":"NKA商超.xlsx（冻结样例）","truth_label":"真实样例","grain":"客户/月（财年模板）","updated_at":"2026-10-17","status":"available"},
+    {"id":"SRC-POS","name":"商超云POS模拟接口","truth_label":"匿名模拟","grain":"门店/SKU/日","updated_at":"2026-10-21T08:00:00+08:00","status":"available"},
+    {"id":"SRC-ACT","name":"KA活动计划","truth_label":"匿名模拟","grain":"活动/门店","updated_at":"2026-10-01T09:00:00+08:00","status":"available"},
+    {"id":"SRC-RES","name":"营销资源与费用","truth_label":"匿名模拟","grain":"活动/资源","updated_at":"2026-10-15T10:00:00+08:00","status":"available"},
+    {"id":"SRC-EV","name":"勤策TPM/SFA及促销员填报","truth_label":"匿名模拟","grain":"活动/门店/证据","updated_at":"2026-10-06T18:50:00+08:00","status":"partial"},
+    {"id":"SRC-ERP","name":"佳农ERP模拟接口","truth_label":"匿名模拟","grain":"门店/SKU/活动","updated_at":"2026-10-06T08:00:00+08:00","status":"available"},
+    {"id":"SRC-COMP","name":"受控商圈事件台账","truth_label":"匿名模拟","grain":"门店/事件","updated_at":"2026-10-06T09:00:00+08:00","status":"available"}
+  ]
+}

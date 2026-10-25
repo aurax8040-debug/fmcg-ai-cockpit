@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "KA活动研判输出",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["facts", "data_gaps", "hypotheses", "recommended_checks", "boundaries", "management_summary", "citations"],
+  "properties": {
+    "facts": { "type": "array", "items": { "$ref": "#/$defs/citedItem" } },
+    "data_gaps": { "type": "array", "items": { "$ref": "#/$defs/citedItem" } },
+    "hypotheses": { "type": "array", "items": { "$ref": "#/$defs/citedItem" } },
+    "recommended_checks": { "type": "array", "items": { "$ref": "#/$defs/citedItem" } },
+    "boundaries": { "type": "array", "items": { "type": "string" } },
+    "management_summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["title", "conclusion"],
+      "properties": {
+        "title": { "type": "string" },
+        "conclusion": { "type": "string" }
+      }
+    },
+    "citations": { "type": "array", "items": { "type": "string" }, "uniqueItems": true }
+  },
+  "$defs": {
+    "citedItem": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["text", "citations"],
+      "properties": {
+        "text": { "type": "string" },
+        "citations": { "type": "array", "items": { "type": "string" }, "uniqueItems": true }
+      }
+    }
+  }
+}

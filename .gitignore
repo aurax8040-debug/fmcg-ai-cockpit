@@ -1,0 +1,26 @@
+# Secrets and local configuration
+.env
+.env.*
+!.env.demo.example
+*.pem
+*.key
+*.p12
+# Runtime / generated content
+node_modules/
+demo-data/runtime-state*.json
+!demo-data/runtime-state.example.json
+output/
+logs/
+*.log
+*.tmp
+*.pid
+.DS_Store
+.workbuddy/
+.wbapp_*
+.superpowers/
+*.zip
+*.tar.gz
+
+# Exported binary documents (source HTML/Markdown is tracked)
+*.docx
+*.pdf

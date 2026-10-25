@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>答辩速查卡 · KA活动AI经营闭环</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f4f7fc;color:#1f2a44;font-family:"PingFang SC","Microsoft YaHei",sans-serif;line-height:1.65}.page{max-width:860px;margin:28px auto;background:#fff;border-radius:16px;padding:34px 38px;box-shadow:0 8px 30px rgba(20,40,90,.08)}h1{font-size:24px;color:#2f6bff;margin:0 0 4px}.sub{font-size:13px;color:#7a8699;margin-bottom:24px}h2{font-size:16px;margin:24px 0 10px;padding-left:10px;border-left:4px solid #2f6bff}.say,.warn{border-radius:9px;padding:12px 15px;margin:10px 0;font-size:14px}.say{background:#f0fff4;border:1px solid #b7ebc9}.warn{background:#fff8e6;border:1px solid #ffe0a3;color:#735a08}table{width:100%;border-collapse:collapse;font-size:13px}th,td{border:1px solid #e7ecf5;padding:9px 10px;text-align:left;vertical-align:top}th{background:#f5f8ff}.tag{display:inline-block;background:#eef3ff;color:#2f6bff;border-radius:5px;padding:2px 8px;margin:2px 4px 2px 0;font-size:12px}ol{padding-left:22px}li{margin:6px 0}@media(max-width:600px){body{background:#fff}.page{margin:0;padding:22px 18px;box-shadow:none}table{display:block;overflow-x:auto}}
+</style>
+</head>
+<body><main class="page">
+<h1>答辩速查卡 · KA活动AI经营闭环</h1>
+<div class="sub">面试作品 Demo ｜ 数据底座 → AI研判 → 业务执行 → AI经营分析</div>
+
+<h2>30秒开场</h2>
+<div class="say">我们是佳沛经销商，NKA经理对接商超总部，营销部协调执行公司和长临促，战区销售负责巡店跟进。真正的问题不是“有没有报表”，而是总部活动确认后，POS表现、活动费用和门店执行证据没有形成一个可追溯闭环。这个 Demo 展示的是：用确定性代码算经营指标，用 Dify 做有引用的研判，再由人确认任务、补充证据并复盘。</div>
+
+<h2>3—5分钟演示顺序</h2>
+<ol>
+  <li><b>经营总览：</b>先指出重点活动及完整度，不急着给根因。</li>
+  <li><b>数据底座：</b>解释统一关联键“KA → 活动 → 门店 → 日期 → SKU”，展示来源、更新时间与数据缺口。</li>
+  <li><b>AI研判：</b>数字由代码计算；Dify只整理事实、缺口、待验证假设和核查动作，输出必须引用 trace ID。</li>
+  <li><b>业务执行：</b>AI建议不能自动下发；人工确认后才创建任务，执行人补证，状态写回。</li>
+  <li><b>AI经营分析：</b>展示前中后变化、费用、模拟毛利、证据覆盖和任务闭环；没有对照组就不说因果增量。</li>
+</ol>
+
+<h2>三种真值标签</h2>
+<p><span class="tag">真实样例</span>NKA商超.xlsx 的客户/月销售和毛利聚合。</p>
+<p><span class="tag">匿名模拟</span>KA-A活动、12家门店、POS、营销资源、执行证据和成本。</p>
+<p><span class="tag">AI 推断</span>Dify输出；假设待验证，引用不合法则整段拒绝展示。</p>
+
+<h2>面试官追问</h2>
+<table>
+  <tr><th>问题</th><th>回答要点</th></tr>
+  <tr><td>为什么需要AI？</td><td>代码负责算数和门槛，AI负责把多源证据组织成可读的事实、缺口和核查顺序；它不替代审批。</td></tr>
+  <tr><td>BI数据怎么给AI？</td><td>生产环境不让模型直连数据库。后端按活动ID查询数仓/BI，生成最小证据JSON，再服务端调用Dify。</td></tr>
+  <tr><td>数据是真的吗？</td><td>清楚区分三类标签。当前活动闭环是匿名模拟；真实BI API、库存和实际业务影响均未接入。</td></tr>
+  <tr><td>怎么防止AI胡说？</td><td>指标先由代码计算；完整度门槛；结构化JSON；只允许引用输入trace IDs；失败时保留数字并明确显示失败，不塞模板结论。</td></tr>
+  <tr><td>怎么证明活动有效？</td><td>当前只能展示变化观察。要声称因果增量，必须补充有效对照或实验设计。</td></tr>
+  <tr><td>怎么换成真实系统？</td><td>保持页面与Dify契约不变，把Mock BI接口替换为佳农BI/数仓服务，并接SFA任务与证据回写。</td></tr>
+</table>
+
+<h2>边界一定要主动说</h2>
+<div class="warn">无库存数据，不判断缺货；无有效对照，不声称因果增量；模型不计算权威经营数字；AI不自动下任务、不审批费用、不调整营销资源；当前不报告节省、准确率或业务提升。</div>
+</main></body></html>

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 应用岗能力地图 · 面试速答卡</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;font-family:"PingFang SC","Microsoft YaHei",sans-serif;}
+  :root{--primary:#2f6bff;--bg:#f4f7fc;--card:#fff;--line:#e8edf5;--txt:#1f2a44;--sub:#5c6b8a;--ok:#2ba471;--risk:#e34d4d;--warn:#f5a623;--code-bg:#0f172a;}
+  body{background:var(--bg);color:var(--txt);line-height:1.75;}
+  .wrap{max-width:920px;margin:0 auto;padding:30px 20px 80px;}
+  .hero{background:linear-gradient(135deg,#2f6bff,#6a8fff);color:#fff;border-radius:16px;padding:34px 34px;margin-bottom:22px;}
+  .hero h1{font-size:24px;font-weight:700;margin-bottom:8px;}
+  .hero .sub{font-size:14px;opacity:.94;max-width:720px;}
+  .hero .meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px;}
+  .chip{background:rgba(255,255,255,.18);padding:3px 12px;border-radius:20px;font-size:12px;}
+  .sec{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:24px 26px;margin-bottom:18px;}
+  .sec h2{font-size:17px;font-weight:700;margin-bottom:14px;padding-left:11px;border-left:4px solid var(--primary);}
+  .sec h3{font-size:14px;font-weight:600;margin:16px 0 8px;color:var(--txt);}
+  .sec p,.sec li{font-size:14px;color:var(--sub);}
+  .sec ul{padding-left:20px;margin:6px 0;}
+  .sec li{margin:5px 0;}
+  .hl{color:var(--primary);font-weight:600;}
+  .ok{color:var(--ok);font-weight:600;}
+  .risk{color:var(--risk);font-weight:600;}
+  .warn{color:var(--warn);font-weight:600;}
+  table{width:100%;border-collapse:collapse;font-size:13px;}
+  th,td{border:1px solid var(--line);padding:9px 12px;text-align:left;vertical-align:top;}
+  th{background:#f6f9ff;color:var(--txt);font-weight:600;white-space:nowrap;}
+  td{color:var(--sub);}
+  .layer{display:flex;gap:12px;align-items:stretch;margin:8px 0;}
+  .layer .no{flex:none;width:26px;height:26px;border-radius:50%;background:var(--primary);color:#fff;font-size:13px;text-align:center;line-height:26px;font-weight:700;margin-top:2px;}
+  .layer .body{flex:1;background:#f7faff;border:1px solid var(--line);border-radius:10px;padding:12px 16px;}
+  .layer .body b{color:var(--txt);}
+  .me{border-color:#2f6bff;background:#eef3ff;}
+  .me .no{background:#2f6bff;}
+  .me b{color:#2f6bff;}
+  .route{display:flex;gap:12px;align-items:stretch;margin:10px 0;}
+  .route .tagbox{flex:none;width:88px;display:flex;align-items:center;justify-content:center;border-radius:10px;font-weight:700;font-size:14px;color:#fff;}
+  .r-prompt{background:#2f6bff;}
+  .r-rag{background:#f5a623;}
+  .r-ft{background:#e34d4d;}
+  .route .body{flex:1;background:#fafbfe;border:1px solid var(--line);border-radius:10px;padding:12px 16px;}
+  .route .body b{color:var(--txt);}
+  .qa{background:#f7faff;border-left:4px solid var(--primary);border-radius:8px;padding:13px 16px;margin:12px 0;}
+  .qa .q{font-size:13px;font-weight:600;color:var(--txt);}
+  .qa .a{font-size:13px;color:var(--sub);margin-top:5px;}
+  .speak{background:#fff8ec;border:1px solid #ffe0a8;border-radius:10px;padding:16px 18px;font-size:14px;color:#6b5717;margin-top:8px;line-height:1.9;}
+  .speak b{color:#8a6d1f;}
+  .foot{text-align:center;color:#9aa7bf;font-size:12px;margin-top:30px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="hero">
+    <h1>AI 应用岗 · 能力地图与面试速答卡</h1>
+    <div class="sub">搞清楚「AI 应用产品要不要训练数据」，以及「什么时候上 Prompt / RAG / 微调」——这是 AI 应用产品经理的核心判断力。</div>
+    <div class="meta">
+      <span class="chip">AI 价值链分层</span>
+      <span class="chip">三条技术路线</span>
+      <span class="chip">面试话术</span>
+    </div>
+  </div>
+
+  <div class="sec">
+    <h2>一、AI 价值链三层：你在哪一层</h2>
+    <p style="margin-bottom:8px;">「需不需要训练数据」不取决于大厂小厂，而取决于你在价值链的哪一层：</p>
+    <div class="layer">
+      <div class="no">1</div>
+      <div class="body"><b>基座模型层</b> —— OpenAI / DeepSeek / 通义等。需要<b class="risk">海量训练数据</b>。岗位：算法研究员、训练工程师。</div>
+    </div>
+    <div class="layer me">
+      <div class="no">2</div>
+      <div class="body"><b>应用 / 策略层（你在这里）</b> —— 业务产品团队，<b>通常不自己训练</b>，用现成模型做场景落地。岗位：AI 产品经理、应用策略。<span class="hl">→ 核心资产是「评测数据」，不是「训练数据」。</span></div>
+    </div>
+    <div class="layer">
+      <div class="no">3</div>
+      <div class="body"><b>落地 / 运营层</b> —— 一线业务，不需要训练数据。岗位：运营、销售。</div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <h2>二、三条技术路线：什么时候用什么</h2>
+    <p style="margin-bottom:8px;">「没有训练数据」≠「技术路线上没有选择」。AI 应用层有三条路线，判断力就在这里体现：</p>
+    <div class="route">
+      <div class="tagbox r-prompt">Prompt</div>
+      <div class="body"><b>零训练</b>：写提示词 + 契约 + 护栏，直接调现成模型。<span class="hl">（你现在的作品）</span><br>适用：通用能力够、场景靠约束就能落地。优点快、成本低；缺点是能力边界受限于模型。</div>
+    </div>
+    <div class="route">
+      <div class="tagbox r-rag">RAG</div>
+      <div class="body"><b>零训练、但要数据</b>：把企业私有数据做成检索库喂给模型当上下文。<br>适用：需要注入专有知识、但又不想/不需要训练。需要的是<b>知识库数据</b>，不是标注训练集。</div>
+    </div>
+    <div class="route">
+      <div class="tagbox r-ft">微调</div>
+      <div class="body"><b>要训练数据</b>：用少量标注数据微调，让模型学会特定格式或领域。<br>适用：Prompt 和 RAG 都搞不定的稳定格式/领域任务。到这一步才真正需要<b>标注训练数据</b>。</div>
+    </div>
+    <p style="margin-top:8px;">判断顺序：<span class="hl">先 Prompt → 不够再 RAG → 仍不够才微调</span>。绝大多数应用产品停在 Prompt + RAG。</p>
+  </div>
+
+  <div class="sec">
+    <h2>三、高频追问 &amp; 你的答法</h2>
+    <div class="qa">
+      <div class="q">Q1：你不训练模型，凭什么保证输出对？</div>
+      <div class="a">A：经营数字是代码确定性计算的，模型不碰数字，只做归纳和引用；输出逐条引用 trace_id，引用越界就整体拒绝——把「可错的部分」关进工程笼子。</div>
+    </div>
+    <div class="qa">
+      <div class="q">Q2：提示词会漂移，怎么做回归？</div>
+      <div class="a">A：30 条冻结评测样本（不随版本改）+ 15 个确定性单测（mock 掉模型测规则），这就是应用层的「测试集 + 验证集」。</div>
+    </div>
+    <div class="qa">
+      <div class="q">Q3：怎么证明产品真的有用？</div>
+      <div class="a">A：线上人工反馈闭环——采纳率、任务生成率、任务完成率，≥20 条样本才出指标，衡量真实价值而非离线分数。</div>
+    </div>
+    <div class="qa">
+      <div class="q">Q4：这个产品需不需要训练数据？</div>
+      <div class="a">A：当前基于现成大模型 + 提示词 + 契约，不需要。若后续遇到提示词搞不定的专有场景，再考虑微调或 RAG，那时才需要标注数据或知识库。</div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <h2>四、一句定心话术（可直接背）</h2>
+    <div class="speak">
+      「AI 应用产品通常不需要自己训练模型。我的做法是<b>基于现成大模型，用提示词 + 输出契约约束行为，把重点放在评测集和反馈闭环上</b>。如果后续出现提示词搞不定的专有场景，再考虑<b>微调或 RAG</b>，到那时才需要准备标注数据或企业知识库。所以我的核心资产是<b>『评测数据』，不是『训练数据』</b>——这恰恰是 AI 应用产品经理真正该掌控的东西。」
+    </div>
+  </div>
+
+  <div class="foot">快消智析平台 · AI 应用岗能力地图 · 生成于 2026-10-18</div>
+</div>
+</body>
+</html>
