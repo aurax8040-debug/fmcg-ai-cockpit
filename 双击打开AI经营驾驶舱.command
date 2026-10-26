@@ -7,14 +7,20 @@ RUNTIME_DIR="${TMPDIR:-/tmp}/fmcg-ai-demo"
 mkdir -p "$RUNTIME_DIR"
 cd "$PROJECT_DIR"
 
-if ! curl -fsS --max-time 2 http://127.0.0.1:8787/api/health >/dev/null 2>&1; then
+# Dify must be checked even when the BI gateway is already running.
+if ! curl -fsS --max-time 2 http://localhost/ >/dev/null 2>&1; then
+  open /Users/liuxiaohua/Applications/Dify.app >/dev/null 2>&1 || open -a Docker >/dev/null 2>&1 || true
+  for i in {1..90}; do
+    curl -fsS --max-time 2 http://localhost/ >/dev/null 2>&1 && break
+    sleep 2
+  done
   if ! curl -fsS --max-time 2 http://localhost/ >/dev/null 2>&1; then
-    open /Users/liuxiaohua/Applications/Dify.app >/dev/null 2>&1 || open -a Docker >/dev/null 2>&1 || true
-    for i in {1..90}; do
-      curl -fsS --max-time 2 http://localhost/ >/dev/null 2>&1 && break
-      sleep 2
-    done
+    echo "Dify尚未就绪，请确认Docker Desktop已运行后重试。" >&2
+    exit 1
   fi
+fi
+
+if ! curl -fsS --max-time 2 http://127.0.0.1:8787/api/health >/dev/null 2>&1; then
   set -a
   source .env.demo
   set +a

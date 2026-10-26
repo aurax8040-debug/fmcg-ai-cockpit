@@ -1,4 +1,4 @@
-export function createDifyClient({ baseUrl, apiKey, fetchImpl = fetch, timeoutMs = 45_000 }) {
+export function createDifyClient({ baseUrl, apiKey, fetchImpl = fetch, timeoutMs = 90_000 }) {
   const configured = Boolean(baseUrl && apiKey);
   return {
     configured,
@@ -36,6 +36,11 @@ export function createDifyClient({ baseUrl, apiKey, fetchImpl = fetch, timeoutMs
         }
         return outputs.analysis ?? outputs.result ?? outputs;
       } catch (error) {
+        if (error instanceof TypeError && error.message === 'fetch failed') {
+          const unavailable = new Error('无法连接本机Dify服务，请先启动Docker Desktop和Dify，再重试。');
+          unavailable.code = 'DIFY_UNREACHABLE';
+          throw unavailable;
+        }
         if (error.name === 'AbortError') {
           const timeout = new Error('Dify调用超时');
           timeout.code = 'DIFY_TIMEOUT';
