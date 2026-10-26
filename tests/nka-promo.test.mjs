@@ -29,9 +29,10 @@ test('NKA endpoint rejects out-of-scope questions without calling Dify; valid an
  const dir=await mkdtemp(join(tmpdir(),'nka-demo-'));const stateStore=await createStateStore({filePath:join(dir,'state.json')});let calls=0;
  const difyClient={configured:true,run:async input=>{calls++;const evidence=JSON.parse(input.evidence_json);const id=evidence.store.trace_ids[0];return {facts:[{text:'POS未达标',citations:[id]}],data_gaps:[],hypotheses:[],recommended_checks:[{text:'复核SFA照片',citations:[id]}],boundaries:['不认定因果'],management_summary:{title:'执行核查',conclusion:'先核对证据'},citations:[id]};}};
  await withServer(createApp({dataset:merged,stateStore,difyClient}),async base=>{
-  const request=question=>jsonRequest(base+'/api/weekend-promos/investigate',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({cycle_id:cycle,store_id:'HEMA-DEMO-01',question})});
+  const request=question=>jsonRequest(base+'/api/weekend-promos/investigate',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({cycle_id:cycle,store_id:'HEMA-DEMO-01',question,review_kind:'standard'})});
   assert.equal((await request('临促预算多少')).response.status,400);assert.equal(calls,0);
   const ok=await request('核查这家店的本次临促差距');assert.equal(ok.body.agent_status,'success');assert.equal(calls,1);assert.equal(ok.body.chat_run.context.selected_store.store_id,'HEMA-DEMO-01');
+  const cached=await jsonRequest(base+'/api/weekend-promos/current?cycle_id='+cycle);assert.equal(cached.body.saved_reviews['HEMA-DEMO-01'].id,ok.body.chat_run.id);assert.equal(calls,1);
  });
 });
 
@@ -46,4 +47,18 @@ test('AI workflow gates followups and drafts on actual result, selected store an
  assert.equal(model.analysisAccess({...base,decision:'modified',amendment:'先复核照片和时间'}).canDraft,true);
  assert.equal(model.analysisAccess({...base,decision:'adopted',busy:true}).canDraft,false);
  assert.equal(model.analysisAccess({...base,decision:'adopted',selected:'HEMA-DEMO-02'}).canDraft,false);
+});
+
+test('saved standard reviews require matching cycle, store, evidence and success; followups never replace them',async()=>{
+ const {savedPromoReviews}=await import('../server/nka-saved-review.mjs');
+ const store=report.stores[0];
+ const run={id:'saved',status:'success',created_at:'2026-10-26T01:00:00Z',answer_source:'dify_weekend_agent',question:'标准复盘',analysis:{facts:[]},context:{review_kind:'standard',selected_store:{store_id:store.store_id,cycle_id:cycle},store:structuredClone(store),cycle:structuredClone(report.cycle)}};
+ assert.equal(savedPromoReviews(report,[run])[store.store_id].id,'saved');
+ for(const mutate of [r=>r.status='failed',r=>r.context.selected_store.cycle_id='OTHER',r=>r.context.selected_store.store_id='OTHER',r=>r.context.store.current_pos++,r=>r.context.cycle.pos_as_of='new',r=>r.context.review_kind='followup',r=>r.analysis=null]) {
+  const changed=structuredClone(run);mutate(changed);assert.deepEqual(savedPromoReviews(report,[changed]),{});
+ }
+ const newer=structuredClone(run);newer.id='newer';newer.created_at='2026-10-26T02:00:00Z';
+ assert.equal(savedPromoReviews(report,[newer,run])[store.store_id].id,'newer');
+ const followup=structuredClone(newer);followup.context.review_kind='followup';followup.id='followup';
+ assert.equal(savedPromoReviews(report,[run,followup])[store.store_id].id,'saved');
 });

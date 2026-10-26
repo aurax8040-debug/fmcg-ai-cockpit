@@ -1,3 +1,4 @@
+import { savedPromoReviews } from './nka-saved-review.mjs';
 import { assertPromoDemoQuestion } from './nka-promo-demo.mjs';
 import { assertSafeId } from './domain.mjs';
 import { summarizeActivity } from './metrics.mjs';
@@ -66,7 +67,8 @@ export function createApp({ dataset, stateStore, difyClient = { configured: fals
       }
       if (req.method === 'GET' && parts[1] === 'weekend-promos' && parts[2] === 'current' && parts.length === 3) {
         const cycleId = assertSafeId(url.searchParams.get('cycle_id') || 'PROMO-WK14', 'cycle_id');
-        return sendJson(res, 200, summarizeWeekendPromo(dataset, snapshot, cycleId), origin);
+        const review = summarizeWeekendPromo(dataset, snapshot, cycleId);
+        return sendJson(res, 200, { ...review, saved_reviews: savedPromoReviews(review, snapshot.dashboard_chats) }, origin);
       }
       if (req.method === 'POST' && parts[1] === 'weekend-promos' && parts[2] === 'investigate' && parts.length === 3) {
         const payload = await readJson(req);
@@ -97,7 +99,7 @@ export function createApp({ dataset, stateStore, difyClient = { configured: fals
           const chat = await stateStore.recordDashboardChat({
             question: plan.question, status: 'success', scope_fingerprint: scopeFingerprint,
             scope: { range: review.cycle.label, region: store.region || '华东战区', ka: store.ka_system || '当前KA' },
-            context: { context_type: 'weekend_promo', selected_store: { store_id: store.store_id, store_name: store.store_name, cycle_id: cycleId }, store, cycle: review.cycle },
+            context: { review_kind: payload.review_kind === 'standard' ? 'standard' : 'followup', context_type: 'weekend_promo', selected_store: { store_id: store.store_id, store_name: store.store_name, cycle_id: cycleId }, store, cycle: review.cycle },
             answer_source: 'dify_weekend_agent', trace, analysis
           });
           return sendJson(res, 200, { agent_status: 'success', run: saved.run, chat_run: chat.run, store }, origin);
