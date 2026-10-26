@@ -152,6 +152,7 @@
   <div class="nav-group">
     <div class="nav-title">经营驾驶舱</div>
     <div class="nav-item active" data-page="dash"><span class="icon">◉</span>经营总览</div>
+    <div class="nav-item" data-page="promo"><span class="icon">✦</span>临促复盘</div>
   </div>
   <div class="nav-group nav-secondary" id="secondaryNav">
     <button class="nav-title nav-toggle" type="button" aria-expanded="false" onclick="const n=document.getElementById('secondaryNav');n.classList.toggle('open');this.setAttribute('aria-expanded',n.classList.contains('open'))">经营数据 / 更多报表 <span>⌄</span></button>
@@ -165,7 +166,7 @@
     <div class="nav-item" data-page="bi-cate"><span class="icon">▦</span>品类销售分析</div>
     <div class="nav-item" data-page="budget"><span class="icon">♉</span>Sell-Out 预算跟进</div>
     <div class="nav-item" data-page="pos"><span class="icon">◱</span>商超云POS数据</div>
-    <div class="nav-item" data-page="ai"><span class="icon">✦</span>AI 归因诊断</div>
+    <div class="nav-item" data-page="ai"><span class="icon">✦</span>跟进与复盘</div>
     <div class="nav-item" data-page="brief"><span class="icon">✎</span>每日智能简报</div>
   </div>
 </aside>
@@ -187,6 +188,7 @@
 
   <div class="notice" id="dataLineage" style="background:#f7f9fd;border:1px solid #e4eaf5;border-radius:9px;padding:9px 13px;"><b>数据口径与更新频次：</b>销售与毛利来自 <b>NKA商超.xlsx</b>（财年累计 04月—次年03月，确认收入口径）。<b>10月/11月数据未录入</b>，按 0 显示。门店数、拜访达成、陈列执行、SKU 明细、费用核销为<b>演示快照</b>，待 SFA/POS 真实数据接入。客户名称变更可能导致周同比不可比。</div>
   <!-- ============ 页面：数据驾驶舱 ============ -->
+  <section id="page-promo" class="page"></section>
   <section id="page-dash" class="page active">
   <!-- KPI -->
   <div class="kpi-row">
@@ -664,6 +666,7 @@
 
 <script src="app.js?v=20261017e"></script>
 <script src="enhancements.js?v=20261017e"></script>
-<script src="cockpit.js?v=20261018b"></script>
+<script src="promo-page.js?v=20261026"></script>
+<script src="cockpit.js?v=20261026-promo-only"></script>
 </body>
 </html>

@@ -64,6 +64,15 @@ test('weekend promo API sends Dify a versioned evidence package with allowed tra
   });
   const evidence = JSON.parse(received.evidence_json);
   assert.equal(String(evidence.data_version), received.data_version);
-  assert.ok(evidence.trace_ids.includes('POS-PROMO-WK14-STORE-HD'));
+  assert.ok(evidence.trace_ids.includes('TR-WK14-POS-HD'));
   assert.ok(evidence.trace_ids.includes('TR-PROMO-WK14-STORE-HD-peer_benchmark'));
+});
+
+test('promo API refuses budget, general questions and historical POS before calling Dify', async()=>{
+ const dir=await mkdtemp(join(tmpdir(),'promo-scope-'));const stateStore=await createStateStore({filePath:join(dir,'state.json')});let calls=0;
+ await withServer(createApp({dataset,stateStore,difyClient:{configured:true,run:async()=>{calls++;throw Error('must not call');}}}),async base=>{
+  for(const question of ['分析客户经营预算','全渠道销售增长','写代码','这家店上月POS是多少？','临促预算多少？']){
+   const r=await jsonRequest(`${base}/api/weekend-promos/investigate`,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({cycle_id:'PROMO-WK14',store_id:'STORE-HD',question})});assert.equal(r.response.status,400);assert.match(r.body.error.message,/仅支持本周临促/);
+  }
+ });assert.equal(calls,0);assert.equal(stateStore.snapshot().agent_runs.length,0);
 });

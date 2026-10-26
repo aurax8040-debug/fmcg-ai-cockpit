@@ -7,11 +7,16 @@ const LABELS = {
   peer_benchmark: '查询匿名达标门店基准'
 };
 
+export function assertPromoQuestion(question) {
+ const q=String(question||'').trim();
+ if(!q||q.length>1000||/预算|全渠道|客户经营|普通客户|毛利|ERP|上月|上季度|年度|写代码|编程|天气|股票|密码|忽略.*规则/.test(q)||! /临促|本周|这家店|该店|门店|SFA|巡店|缺.*证据|陈列|分销|商品|拜访|对标|执行|原因|下周|建议|跟进|差距|POS/i.test(q)) {const error=new Error('仅支持本周临促复盘，不回答预算、普通客户经营或其他泛经营问题');error.code='INVALID_INPUT';throw error;}
+ return q;
+}
 export function planWeekendPromoReview(question, store) {
   if (!String(question || '').trim()) { const error = new Error('请输入研判问题'); error.code = 'INVALID_INPUT'; throw error; }
   if (!store?.ai_eligible) { const error = new Error('Agent只分析BI规则识别的未达标门店'); error.code = 'INVALID_INPUT'; throw error; }
   return {
-    question: String(question).trim(),
+    question: assertPromoQuestion(question),
     store_id: store.store_id,
     tools: ['pos_result', 'promo_resource', 'sfa_visit', 'sfa_quality', 'sfa_promoter_issue', 'peer_benchmark'],
     boundary: ['经营指标由BI计算，Agent不重算', '对标结果为相关性线索，不认定因果', 'AI不自动下发任务或调整临促资源']

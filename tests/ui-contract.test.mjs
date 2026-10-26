@@ -5,6 +5,7 @@ import { readFile } from 'node:fs/promises';
 const html = await readFile(new URL('../index.html', import.meta.url), 'utf8');
 const css = await readFile(new URL('../cockpit.css', import.meta.url), 'utf8');
 const cockpit = await readFile(new URL('../cockpit.js', import.meta.url), 'utf8');
+const promo = await readFile(new URL('../promo-page.js', import.meta.url), 'utf8');
 const app = await readFile(new URL('../app.js', import.meta.url), 'utf8');
 
 test('dashboard is the single primary entry without the four-stage shell', () => {
@@ -35,12 +36,15 @@ test('original dashboard keeps its reports and human task boundary', () => {
   assert.match(html, /nav-secondary/);
 });
 
-test('inline AI chat calls Dify-backed gateway and shows concise verified output', () => {
-  for (const text of ['AI 经营助手', '/api/dashboard/chat', '统一分析与追问入口', '建议下一步', '边界：', 'dashboardAiContext', 'scope_fingerprint', '当前AI读取范围', '生成拜访待办']) assert.match(cockpit, new RegExp(text));
-  assert.match(cockpit, /AI暂时不可用/);
-  assert.match(css, /\.chat-toggle,\.chat-panel\{display:none!important\}/);
-  assert.match(app, /aiRunId:curTask\.aiRunId\|\|null/);
-  assert.match(cockpit, /dashboardAiContext/);
+test('only promo page renders store-level AI while dashboard contains a summary entry',()=>{
+ assert.match(html,/data-page="promo"/);assert.match(html,/id="page-promo"/);
+ assert.match(promo,/if\(page!=='promo'\)return/);assert.match(promo,/本周临促摘要/);assert.match(promo,/进入临促复盘/);
+ assert.match(cockpit,/innerHTML=promoHomeSummary\(\)/);
+ assert.doesNotMatch(cockpit,/function screenshotPriorityCard/);
+ assert.match(promo,/临促复盘助手/);assert.match(cockpit,/api\/weekend-promos\/investigate/);
+ assert.doesNotMatch(cockpit,/api\/dashboard\/chat'/);
+ assert.match(css,/page:not\(#page-promo\) \.chat-inline/);assert.match(css,/page:not\(#page-promo\) \.ai-card/);
+ assert.match(cockpit,/仅支持临促复盘生成SFA草稿/);
 });
 
 test('AI feedback and measurable outcome loop are visible', () => {
@@ -49,22 +53,9 @@ test('AI feedback and measurable outcome loop are visible', () => {
   assert.match(app, /recordAiTaskEvent\(t\.aiRunId,'completed'/);
 });
 
-test('weekend promo dashboard separates BI screening from controlled agent analysis', () => {
-  for (const text of ['周末临促分析', '本周临促大盘', '异常门店', '本周POS', '门店达标', '达标率', 'AI按权限调用POS与SFA', '/api/weekend-promos/current', '/api/weekend-promos/investigate', '让AI分析', 'AI调用的对标结果', 'AI负责选择比较维度', '统一分析与追问入口', '这家店上月POS', '采纳', '修改后采纳', '不采纳', '生成拜访待办']) assert.match(cockpit, new RegExp(text));
-  assert.match(cockpit, /weekendPromoSelected=null/);
-  assert.match(cockpit, /if\(!weekendPromoSelected\)return null/);
-  assert.match(cockpit, /weekendPromoConversationStart=dashboardChatHistory\.length/);
-  assert.match(cockpit, /dashboardChatHistory\.slice\(weekendPromoConversationStart\)/);
-  assert.match(cockpit, /analyzeWeekendPromoStore\(id\)/);
-  for (const text of ['AI已调用', '门店POS', 'SFA巡店', '匿名达标门店基准', '本周POS / 目标', '周六 / 周日', '较上次临促']) assert.match(cockpit, new RegExp(text));
-  assert.match(cockpit, /context\.selected_store\?\.store_id\|\|'ALL'/);
-  assert.match(cockpit, /不得暴露对标门店明细或声称因果/);
-  assert.doesNotMatch(cockpit, /BI证据·同类达标门店对标/);
-  assert.doesNotMatch(cockpit, /总体达成/);
-  assert.doesNotMatch(cockpit, /BI读取 · 本周最新SFA原始记录/);
-  assert.doesNotMatch(cockpit, /SFA \$\{esc\(x\.sfa_status\)\}/);
-  assert.doesNotMatch(cockpit, /BI数据明细 · 异常门店/);
-  assert.doesNotMatch(cockpit, /佳农ERP＋客户POS|受控商圈台账/);
-  assert.doesNotMatch(cockpit, /class="agent-result/);
-  for (const text of ['promo-summary', 'promo-store-row', 'promo-store-action', 'promo-gap-table', 'promo-stage-label', 'unified-ai-window', 'ai-promo-result', 'ai-comparison']) assert.match(css, new RegExp(text));
+test('promo page retains BI screening, anonymous comparisons and human task boundary',()=>{
+ for(const text of ['本周临促大盘','异常门店','AI已调用','门店POS','SFA巡店','匿名达标门店基准','生成拜访待办','不自动调整临促资源'])assert.ok((cockpit+promo).includes(text),text);
+ assert.match(cockpit,/weekendPromoSelected=null/);assert.match(cockpit,/if\(!weekendPromoSelected\)return null/);
+ assert.match(cockpit,/context_type==='weekend_promo'/);
+ assert.match(cockpit,/if\(weekendPromoSelected!==store.store_id\)return/);
 });

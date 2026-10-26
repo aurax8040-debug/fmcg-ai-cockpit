@@ -3,12 +3,10 @@ import { summarizeActivity } from './metrics.mjs';
 import { errorStatus, isLoopbackOrigin, readJson, sendJson } from './http-utils.mjs';
 import { validateAnalysis } from './analysis-contract.mjs';
 import { executeInvestigationTools, planInvestigation } from './investigation-agent.mjs';
-import { normalizeDashboardContext } from './dashboard-chat.mjs';
 import { summarizeEvaluation } from './evaluation-metrics.mjs';
 import { summarizeStoreExecution } from './store-execution.mjs';
 import { summarizeWeekendPromo } from './weekend-promo-review.mjs';
 import { executeWeekendPromoTools, planWeekendPromoReview } from './weekend-promo-agent.mjs';
-import { resolveMonthlyStorePos } from './store-pos-query.mjs';
 
 function notFound(message = '接口不存在') {
   const error = new Error(message);
@@ -83,7 +81,7 @@ export function createApp({ dataset, stateStore, difyClient = { configured: fals
         try {
           const raw = await difyClient.run({
             activity_id: cycleId,
-            question: `周末临促受控Agent：${plan.question}\n只能根据BI确定性指标、当前门店SFA证据和匿名对标聚合回答；不得重算指标、暴露对标门店明细或声称因果。`,
+            question: `周末临促受控Agent：${plan.question}\n仅回答本周已结束临促的门店复盘及下周SFA验证建议，不回答预算、普通客户经营或其他泛经营问题。只能根据BI确定性指标、当前门店SFA证据和匿名对标聚合回答；不得重算指标、暴露对标门店明细或声称因果。`,
             role: 'NKA客户经理',
             evidence_json: JSON.stringify({ data_version: snapshot.data_version, trace_ids: evidenceTraceIds, cycle: review.cycle, rule: review.rule, authorization: review.authorization, store, agent_context: { plan, trace } }),
             data_version: String(snapshot.data_version)
@@ -119,38 +117,7 @@ export function createApp({ dataset, stateStore, difyClient = { configured: fals
         return sendJson(res, 200, await stateStore.recordChatTaskEvent(parts[3], await readJson(req)), origin);
       }
       if (req.method === 'POST' && parts[1] === 'dashboard' && parts[2] === 'chat' && parts.length === 3) {
-        const payload = await readJson(req);
-        const question = String(payload.question || '').trim();
-        const recordType = payload.record_type === 'frozen_evaluation' ? 'frozen_evaluation' : 'usage';
-        if (!question || question.length > 1000) {
-          const error = new Error('问题不能为空且不能超过1000字');
-          error.code = 'INVALID_INPUT';
-          throw error;
-        }
-        const context = normalizeDashboardContext(payload.context, payload.scope_fingerprint);
-        const startedAt = Date.now();
-        const posTool = resolveMonthlyStorePos(dataset, question, context, '2026-10-19');
-        if (posTool) {
-          const toolContext = { ...context, store_pos_query: posTool.tool_result };
-          const saved = await stateStore.recordDashboardChat({ question, status: 'success', record_type: recordType, scope_fingerprint: context.scope_fingerprint, scope: context.scope, context: toolContext, answer_source: posTool.answer_source, trace: posTool.trace_id ? [{ tool: 'store_monthly_pos', label: '查询门店月度POS', trace_id: posTool.trace_id }] : [], analysis: posTool.analysis, duration_ms: Date.now() - startedAt });
-          return sendJson(res, 200, { chat_status: 'success', run: saved.run }, origin);
-        }
-        try {
-          const raw = await difyClient.run({
-            activity_id: 'DASHBOARD-CURRENT',
-            question: `驾驶舱当前筛选问题：${question}\n请严格基于当前scope、metrics、customers、sources和gaps回答。`,
-            role: '经营管理者',
-            evidence_json: JSON.stringify(context),
-            data_version: context.data_version
-          });
-          const analysis = validateAnalysis(raw, context.trace_ids);
-          const saved = await stateStore.recordDashboardChat({ question, status: 'success', record_type: recordType, scope_fingerprint: context.scope_fingerprint, scope: context.scope, context, analysis, duration_ms: Date.now() - startedAt });
-          return sendJson(res, 200, { chat_status: 'success', run: saved.run }, origin);
-        } catch (error) {
-          const chatError = { code: error.code || 'DASHBOARD_CHAT_ERROR', message: error.message };
-          const saved = await stateStore.recordDashboardChat({ question, status: 'failed', record_type: recordType, scope_fingerprint: context.scope_fingerprint, scope: context.scope, context, error: chatError, duration_ms: Date.now() - startedAt });
-          return sendJson(res, 200, { chat_status: 'failed', run: saved.run }, origin);
-        }
+        return sendJson(res, 400, {error:{code:'PROMO_ONLY',message:'经营对话入口已关闭；请进入临促复盘，选择本周异常门店后分析。'}}, origin);
       }
       if (req.method === 'POST' && parts[1] === 'agents' && parts[2] === 'investigate' && parts.length === 3) {
         const payload = await readJson(req);
