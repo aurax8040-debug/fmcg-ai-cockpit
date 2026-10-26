@@ -1,3 +1,4 @@
+import { assertPromoDemoQuestion } from './nka-promo-demo.mjs';
 import { assertSafeId } from './domain.mjs';
 import { summarizeActivity } from './metrics.mjs';
 import { errorStatus, isLoopbackOrigin, readJson, sendJson } from './http-utils.mjs';
@@ -74,7 +75,9 @@ export function createApp({ dataset, stateStore, difyClient = { configured: fals
         const review = summarizeWeekendPromo(dataset, snapshot, cycleId);
         const store = review.stores.find(row => row.store_id === storeId);
         if (!store) throw notFound('门店不存在');
-        const plan = planWeekendPromoReview(payload.question || '请分析本周未达标门店与同类达标门店的执行差距，并生成下周验证计划', store);
+        const promoQuestion=payload.question || '分析本次临促执行差距并生成下周验证计划';
+        if(cycleId==='PROMO-HEMA-WK42')assertPromoDemoQuestion(promoQuestion);
+        const plan = planWeekendPromoReview(promoQuestion, store);
         const trace = executeWeekendPromoTools(plan, store).map(row => ({
           ...row,
           trace_id: `TR-${cycleId}-${storeId}-${row.tool}`
@@ -83,7 +86,7 @@ export function createApp({ dataset, stateStore, difyClient = { configured: fals
         try {
           const raw = await difyClient.run({
             activity_id: cycleId,
-            question: `周末临促受控Agent：${plan.question}\n只能根据BI确定性指标、当前门店SFA证据和匿名对标聚合回答；不得重算指标、暴露对标门店明细或声称因果。`,
+            question: `本次临促复盘，仅回答所选门店的活动表现、SFA证据与下周验证建议；拒绝预算及普通客户经营问题。周末临促受控Agent：${plan.question}\n只能根据BI确定性指标、当前门店SFA证据和匿名对标聚合回答；不得重算指标、暴露对标门店明细或声称因果。`,
             role: 'NKA客户经理',
             evidence_json: JSON.stringify({ data_version: snapshot.data_version, trace_ids: evidenceTraceIds, cycle: review.cycle, rule: review.rule, authorization: review.authorization, store, agent_context: { plan, trace } }),
             data_version: String(snapshot.data_version)
