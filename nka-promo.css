@@ -10,3 +10,6 @@
 .nka-evidence p{line-height:1.65}.nka-evidence small{display:block;overflow-wrap:anywhere}
 
 .nka-refresh{background:#fff!important;color:#6664cf!important;border:1px solid #dce2fa!important;padding:7px 12px!important;margin-top:8px;border-radius:8px;cursor:pointer}
+.nka-update-notice{background:#fff8e9;border:1px solid #f1dfba;border-radius:10px;padding:12px;margin:10px 0;color:#6b5834}
+.nka-update-notice p{margin:0 0 8px;line-height:1.6}.nka-update-notice button{border:1px solid #decda5;background:white;color:#6b5834;border-radius:6px;padding:5px 12px;cursor:pointer}
+.nka-update-notice details{margin-top:8px}.nka-update-notice details p{overflow-wrap:anywhere;font-size:11px;margin-top:8px}

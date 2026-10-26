@@ -62,3 +62,20 @@ test('saved standard reviews require matching cycle, store, evidence and success
  const followup=structuredClone(newer);followup.context.review_kind='followup';followup.id='followup';
  assert.equal(savedPromoReviews(report,[run,followup])[store.store_id].id,'saved');
 });
+
+test('review directions merge merchandising signals without forcing a second direction',()=>{
+ const groups=model.reviewDirections([{text:'核对陈列面积2㎡与参考3.2㎡的差距'},{text:'核对分销SKU4个与参考6个的差距'}]);
+ assert.equal(groups.length,1);assert.equal(groups[0].label,'商品与陈列执行');assert.equal(groups[0].items.length,2);
+ assert.equal(model.reviewDirections([]).length,0);
+ assert.equal(model.reviewDirections([{text:'陈列不足'},{text:'临促在岗待复核'}]).length,2);
+});
+
+test('failed update shows friendly notice and keeps technical error in collapsed details',async()=>{
+ const vm=await import('node:vm');
+ const source=(await readFile(new URL('../nka-promo.js',import.meta.url),'utf8')).split('const nkaBaseRender=')[0];
+ const context=vm.createContext({localStorage:{getItem:()=>null},NkaPromoModel:model,esc:value=>String(value).replaceAll('<','&lt;')});vm.runInContext(source,context);
+ vm.runInContext("NKA.run={analysis:{}};NKA.error='RemoteDisconnected <unsafe>';NKA.failedRequest={q:'核查临促',initial:true};",context);
+ const html=vm.runInContext('nkaErrorPanel()',context);
+ assert(html.includes('本次更新未完成，正在展示上次复盘。'));assert(html.includes('重试'));assert(!html.split('<details>')[0].includes('RemoteDisconnected'));assert(html.includes('<details><summary>错误详情</summary>'));assert(html.includes('&lt;unsafe>'));assert(!html.includes('<details open'));
+ vm.runInContext('NKA.run=null',context);assert(vm.runInContext('nkaErrorPanel()',context).includes('仍可查看BI事实'));
+});

@@ -4,5 +4,6 @@ function priorities(rows){return rows.filter(x=>x.ai_eligible).sort((a,b)=>(b.ta
 function scoped(rows,region){return rows.filter(x=>region==='all'||x.region===region);}
 function change(current,previous){return Number.isFinite(current)&&Number.isFinite(previous)&&previous>0?(current-previous)/previous*100:null;}
 function analysisAccess({run,selected,decision,amendment='',busy=false}){const hasResult=Boolean(run?.analysis&&run?.context?.selected_store?.store_id===selected);return{hasResult,canFollowup:hasResult&&!busy,canDraft:hasResult&&!busy&&(decision==='adopted'||decision==='modified'&&Boolean(String(amendment||'').trim()))};}
-const api={totals,priorities,scoped,change,analysisAccess};if(typeof module!=='undefined')module.exports=api;else root.NkaPromoModel=api;
+function reviewDirections(rows=[]){const groups=[];for(const row of rows){const text=String(row.text||row);const merchandise=/陈列|SKU|商品覆盖|分销/.test(text)&&!/客流|口感|在岗|排班|人员|时段|转化/.test(text);const key=merchandise?'merchandise':null;let group=key&&groups.find(g=>g.key===key);if(!group){group={key,label:merchandise?'商品与陈列执行':'',items:[]};groups.push(group);}group.items.push(text);}return groups.slice(0,2);}
+const api={totals,priorities,scoped,change,analysisAccess,reviewDirections};if(typeof module!=='undefined')module.exports=api;else root.NkaPromoModel=api;
 })(typeof window==='undefined'?globalThis:window);
