@@ -79,3 +79,18 @@ test('failed update shows friendly notice and keeps technical error in collapsed
  assert(html.includes('本次更新未完成，正在展示上次复盘。'));assert(html.includes('重试'));assert(!html.split('<details>')[0].includes('RemoteDisconnected'));assert(html.includes('<details><summary>错误详情</summary>'));assert(html.includes('&lt;unsafe>'));assert(!html.includes('<details open'));
  vm.runInContext('NKA.run=null',context);assert(vm.runInContext('nkaErrorPanel()',context).includes('仍可查看BI事实'));
 });
+
+test('opening and switching NKA stores never restores saved AI or calls the model',async()=>{
+ const vm=await import('node:vm');let calls=[];
+ const source=(await readFile(new URL('../nka-promo.js',import.meta.url),'utf8')).split('const nkaBaseRender=')[0];
+ const cached={context:{selected_store:{store_id:'HEMA-DEMO-01'}},analysis:{management_summary:{conclusion:'历史AI不应自动出现'}}};
+ const context=vm.createContext({localStorage:{getItem:()=>null},NkaPromoModel:model,esc:String,render:()=>{},fetch:async url=>{calls.push(url);return{ok:true,json:async()=>({...report,saved_reviews:{'HEMA-DEMO-01':cached}})};}});
+ vm.runInContext(source,context);vm.runInContext('nkaRender=()=>{};',context);
+ await vm.runInContext('nkaLoad()',context);
+ assert.equal(vm.runInContext('NKA.run',context),null);assert.equal(calls.length,1);assert(calls[0].includes('/current?'));
+ vm.runInContext("nkaSelect('HEMA-DEMO-02');nkaSelect('HEMA-DEMO-01');nkaRegion('east');",context);
+ assert.equal(vm.runInContext('NKA.run',context),null);assert.equal(calls.length,1);
+ const html=vm.runInContext('nkaAnalysisPanel({ai_eligible:true})',context);
+ assert(html.includes('开始AI复盘分析'));assert(!html.includes('历史AI不应自动出现'));assert(!html.includes('<h4>AI复盘结论</h4>'));assert(html.includes('不会自动调用模型'));
+ const launcher=await readFile(new URL('../双击打开AI经营驾驶舱.command',import.meta.url),'utf8');assert(!launcher.includes('prepare-nka-reviews'));
+});

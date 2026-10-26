@@ -40,6 +40,4 @@ if ! curl -fsS --max-time 2 http://127.0.0.1:58044/index.html >/dev/null 2>&1; t
   done
 fi
 
-# Fill only missing reviews in background; existing matching reviews cost no model call.
-nohup "$NODE_BIN" scripts/prepare-nka-reviews.mjs >"$RUNTIME_DIR/prepare-reviews.log" 2>&1 &
 open "http://127.0.0.1:58044/index.html?v=20261026-saved-review"
