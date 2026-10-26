@@ -34,3 +34,16 @@ test('NKA endpoint rejects out-of-scope questions without calling Dify; valid an
   const ok=await request('核查这家店的本次临促差距');assert.equal(ok.body.agent_status,'success');assert.equal(calls,1);assert.equal(ok.body.chat_run.context.selected_store.store_id,'HEMA-DEMO-01');
  });
 });
+
+test('AI workflow gates followups and drafts on actual result, selected store and human decision',()=>{
+ const run={id:'real-run',analysis:{facts:[]},context:{selected_store:{store_id:'HEMA-DEMO-01'}}};
+ const base={run,selected:'HEMA-DEMO-01'};
+ assert.deepEqual(model.analysisAccess({run:null,selected:base.selected,decision:'adopted'}),{hasResult:false,canFollowup:false,canDraft:false});
+ assert.deepEqual(model.analysisAccess(base),{hasResult:true,canFollowup:true,canDraft:false});
+ assert.equal(model.analysisAccess({...base,decision:'adopted'}).canDraft,true);
+ assert.equal(model.analysisAccess({...base,decision:'rejected'}).canDraft,false);
+ assert.equal(model.analysisAccess({...base,decision:'modified',amendment:' '}).canDraft,false);
+ assert.equal(model.analysisAccess({...base,decision:'modified',amendment:'先复核照片和时间'}).canDraft,true);
+ assert.equal(model.analysisAccess({...base,decision:'adopted',busy:true}).canDraft,false);
+ assert.equal(model.analysisAccess({...base,decision:'adopted',selected:'HEMA-DEMO-02'}).canDraft,false);
+});

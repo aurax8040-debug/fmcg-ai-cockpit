@@ -3,5 +3,6 @@ function totals(rows){const valid=rows.filter(x=>Number.isFinite(x.current_pos))
 function priorities(rows){return rows.filter(x=>x.ai_eligible).sort((a,b)=>(b.target-b.current_pos)-(a.target-a.current_pos)||a.store_id.localeCompare(b.store_id)).slice(0,3);}
 function scoped(rows,region){return rows.filter(x=>region==='all'||x.region===region);}
 function change(current,previous){return Number.isFinite(current)&&Number.isFinite(previous)&&previous>0?(current-previous)/previous*100:null;}
-const api={totals,priorities,scoped,change};if(typeof module!=='undefined')module.exports=api;else root.NkaPromoModel=api;
+function analysisAccess({run,selected,decision,amendment='',busy=false}){const hasResult=Boolean(run?.analysis&&run?.context?.selected_store?.store_id===selected);return{hasResult,canFollowup:hasResult&&!busy,canDraft:hasResult&&!busy&&(decision==='adopted'||decision==='modified'&&Boolean(String(amendment||'').trim()))};}
+const api={totals,priorities,scoped,change,analysisAccess};if(typeof module!=='undefined')module.exports=api;else root.NkaPromoModel=api;
 })(typeof window==='undefined'?globalThis:window);
