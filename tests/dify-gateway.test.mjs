@@ -82,3 +82,8 @@ test('blocked evidence does not call Dify', async () => {
     assert.equal(calls, 0);
   });
 });
+
+test('Dify connection failure reports actionable startup instructions without credentials', async()=>{
+ const client=createDifyClient({baseUrl:'http://localhost/v1',apiKey:'test-key',fetchImpl:async()=>{throw new TypeError('fetch failed');}});
+ await assert.rejects(()=>client.run({}),e=>e.code==='DIFY_UNREACHABLE'&&/启动.*Dify|Docker/.test(e.message)&&!e.message.includes('test-key'));
+});

@@ -1,0 +1,528 @@
+{
+  "ka_customers": [
+    {
+      "id": "KA-HEMA-DEMO",
+      "name": "盒马（演示）"
+    }
+  ],
+  "stores": [
+    {
+      "id": "HEMA-DEMO-01",
+      "name": "盒马·沪东店",
+      "ka_id": "KA-HEMA-DEMO",
+      "ka_system": "盒马",
+      "grade": "A",
+      "region": "east",
+      "account_manager": {
+        "id": "AM-EAST-01",
+        "name": "陈晨",
+        "role": "客户经理",
+        "demo_only": true
+      }
+    },
+    {
+      "id": "HEMA-DEMO-02",
+      "name": "盒马·五角场店",
+      "ka_id": "KA-HEMA-DEMO",
+      "ka_system": "盒马",
+      "grade": "A",
+      "region": "east",
+      "account_manager": {
+        "id": "AM-EAST-02",
+        "name": "王悦",
+        "role": "客户经理",
+        "demo_only": true
+      }
+    },
+    {
+      "id": "HEMA-DEMO-03",
+      "name": "盒马·望京店",
+      "ka_id": "KA-HEMA-DEMO",
+      "ka_system": "盒马",
+      "grade": "A",
+      "region": "north",
+      "account_manager": {
+        "id": "AM-NORTH-01",
+        "name": "张宁",
+        "role": "客户经理",
+        "demo_only": true
+      }
+    },
+    {
+      "id": "HEMA-DEMO-04",
+      "name": "盒马·武汉店",
+      "ka_id": "KA-HEMA-DEMO",
+      "ka_system": "盒马",
+      "grade": "A",
+      "region": "central",
+      "account_manager": {
+        "id": "AM-CENTRAL-01",
+        "name": "李欣",
+        "role": "客户经理",
+        "demo_only": true
+      }
+    },
+    {
+      "id": "HEMA-DEMO-05",
+      "name": "盒马·成都店",
+      "ka_id": "KA-HEMA-DEMO",
+      "ka_system": "盒马",
+      "grade": "A",
+      "region": "southwest",
+      "account_manager": {
+        "id": "AM-SW-01",
+        "name": "周然",
+        "role": "客户经理",
+        "demo_only": true
+      }
+    },
+    {
+      "id": "HEMA-DEMO-06",
+      "name": "盒马·西安店",
+      "ka_id": "KA-HEMA-DEMO",
+      "ka_system": "盒马",
+      "grade": "A",
+      "region": "northwest",
+      "account_manager": {
+        "id": "AM-NW-01",
+        "name": "赵宇",
+        "role": "客户经理",
+        "demo_only": true
+      }
+    },
+    {
+      "id": "HEMA-DEMO-07",
+      "name": "盒马·大宁店",
+      "ka_id": "KA-HEMA-DEMO",
+      "ka_system": "盒马",
+      "grade": "A",
+      "region": "east",
+      "account_manager": {
+        "id": "AM-EAST-01",
+        "name": "陈晨",
+        "role": "客户经理",
+        "demo_only": true
+      }
+    },
+    {
+      "id": "HEMA-DEMO-08",
+      "name": "盒马·朝阳店",
+      "ka_id": "KA-HEMA-DEMO",
+      "ka_system": "盒马",
+      "grade": "A",
+      "region": "north",
+      "account_manager": {
+        "id": "AM-NORTH-01",
+        "name": "张宁",
+        "role": "客户经理",
+        "demo_only": true
+      }
+    }
+  ],
+  "weekend_promo_cycles": [
+    {
+      "id": "PROMO-HEMA-WK42",
+      "label": "10月17—18日 · 盒马周末临促（历史模拟）",
+      "start_date": "2026-10-17",
+      "end_date": "2026-10-18",
+      "pos_as_of": "2026-10-19 01:00",
+      "pos_latency": "T+1",
+      "planned_days": 2,
+      "daily_target_yuan": 5000,
+      "target_rule": "模拟A类门店：每店每天POS目标5000元；非ERP或TE预算",
+      "store_ids": [
+        "HEMA-DEMO-01",
+        "HEMA-DEMO-02",
+        "HEMA-DEMO-03",
+        "HEMA-DEMO-04",
+        "HEMA-DEMO-05",
+        "HEMA-DEMO-06",
+        "HEMA-DEMO-07",
+        "HEMA-DEMO-08"
+      ]
+    }
+  ],
+  "weekend_promo_results": [
+    {
+      "cycle_id": "PROMO-HEMA-WK42",
+      "store_id": "HEMA-DEMO-01",
+      "current_pos": 7200,
+      "previous_pos": 8500,
+      "saturday_pos": 4200,
+      "sunday_pos": 3000,
+      "trace_id": "POS-HEMA-DEMO-01-WK42"
+    },
+    {
+      "cycle_id": "PROMO-HEMA-WK42",
+      "store_id": "HEMA-DEMO-02",
+      "current_pos": 8600,
+      "previous_pos": 9000,
+      "saturday_pos": 5016,
+      "sunday_pos": 3584,
+      "trace_id": "POS-HEMA-DEMO-02-WK42"
+    },
+    {
+      "cycle_id": "PROMO-HEMA-WK42",
+      "store_id": "HEMA-DEMO-03",
+      "current_pos": 8000,
+      "previous_pos": 7800,
+      "saturday_pos": 4200,
+      "sunday_pos": 3800,
+      "trace_id": "POS-HEMA-DEMO-03-WK42"
+    },
+    {
+      "cycle_id": "PROMO-HEMA-WK42",
+      "store_id": "HEMA-DEMO-04",
+      "current_pos": 11000,
+      "previous_pos": 10500,
+      "saturday_pos": 6416,
+      "sunday_pos": 4584,
+      "trace_id": "POS-HEMA-DEMO-04-WK42"
+    },
+    {
+      "cycle_id": "PROMO-HEMA-WK42",
+      "store_id": "HEMA-DEMO-05",
+      "current_pos": 11200,
+      "previous_pos": 10500,
+      "saturday_pos": 6533,
+      "sunday_pos": 4667,
+      "trace_id": "POS-HEMA-DEMO-05-WK42"
+    },
+    {
+      "cycle_id": "PROMO-HEMA-WK42",
+      "store_id": "HEMA-DEMO-06",
+      "current_pos": 11200,
+      "previous_pos": 10500,
+      "saturday_pos": 6533,
+      "sunday_pos": 4667,
+      "trace_id": "POS-HEMA-DEMO-06-WK42"
+    },
+    {
+      "cycle_id": "PROMO-HEMA-WK42",
+      "store_id": "HEMA-DEMO-07",
+      "current_pos": 11500,
+      "previous_pos": 10500,
+      "saturday_pos": 6708,
+      "sunday_pos": 4792,
+      "trace_id": "POS-HEMA-DEMO-07-WK42"
+    },
+    {
+      "cycle_id": "PROMO-HEMA-WK42",
+      "store_id": "HEMA-DEMO-08",
+      "current_pos": 11500,
+      "previous_pos": 10500,
+      "saturday_pos": 6708,
+      "sunday_pos": 4792,
+      "trace_id": "POS-HEMA-DEMO-08-WK42"
+    }
+  ],
+  "weekend_promo_resources": [
+    {
+      "cycle_id": "PROMO-HEMA-WK42",
+      "store_id": "HEMA-DEMO-01",
+      "promoter_count": 1,
+      "planned_days": 2,
+      "actual_days": 2,
+      "cost": 800,
+      "trace_id": "RES-HEMA-DEMO-01-WK42"
+    },
+    {
+      "cycle_id": "PROMO-HEMA-WK42",
+      "store_id": "HEMA-DEMO-02",
+      "promoter_count": 1,
+      "planned_days": 2,
+      "actual_days": 2,
+      "cost": 800,
+      "trace_id": "RES-HEMA-DEMO-02-WK42"
+    },
+    {
+      "cycle_id": "PROMO-HEMA-WK42",
+      "store_id": "HEMA-DEMO-03",
+      "promoter_count": 1,
+      "planned_days": 2,
+      "actual_days": 2,
+      "cost": 800,
+      "trace_id": "RES-HEMA-DEMO-03-WK42"
+    },
+    {
+      "cycle_id": "PROMO-HEMA-WK42",
+      "store_id": "HEMA-DEMO-04",
+      "promoter_count": 1,
+      "planned_days": 2,
+      "actual_days": 2,
+      "cost": 800,
+      "trace_id": "RES-HEMA-DEMO-04-WK42"
+    },
+    {
+      "cycle_id": "PROMO-HEMA-WK42",
+      "store_id": "HEMA-DEMO-05",
+      "promoter_count": 1,
+      "planned_days": 2,
+      "actual_days": 2,
+      "cost": 800,
+      "trace_id": "RES-HEMA-DEMO-05-WK42"
+    },
+    {
+      "cycle_id": "PROMO-HEMA-WK42",
+      "store_id": "HEMA-DEMO-06",
+      "promoter_count": 1,
+      "planned_days": 2,
+      "actual_days": 2,
+      "cost": 800,
+      "trace_id": "RES-HEMA-DEMO-06-WK42"
+    },
+    {
+      "cycle_id": "PROMO-HEMA-WK42",
+      "store_id": "HEMA-DEMO-07",
+      "promoter_count": 1,
+      "planned_days": 2,
+      "actual_days": 2,
+      "cost": 800,
+      "trace_id": "RES-HEMA-DEMO-07-WK42"
+    },
+    {
+      "cycle_id": "PROMO-HEMA-WK42",
+      "store_id": "HEMA-DEMO-08",
+      "promoter_count": 1,
+      "planned_days": 2,
+      "actual_days": 2,
+      "cost": 800,
+      "trace_id": "RES-HEMA-DEMO-08-WK42"
+    }
+  ],
+  "weekend_promo_sfa": [
+    {
+      "cycle_id": "PROMO-HEMA-WK42",
+      "store_id": "HEMA-DEMO-01",
+      "visited_at": "2026-10-18T14:20:00+08:00",
+      "visitor_role": "战区销售（模拟）",
+      "visit_status": "已完成",
+      "display_position": "普通货架",
+      "display_area_sqm": 2,
+      "distributed_skus": 4,
+      "price_compliant": true,
+      "brand_material": true,
+      "promoter_present": true,
+      "quality_feedback": "现场口感反馈待复核，不代表客观检测",
+      "promoter_issue": null,
+      "action_note": "核对陈列照片及执行时点",
+      "trace_id": "SFA-HEMA-DEMO-01-WK42",
+      "review_case": {
+        "kind": "display",
+        "title": "案例一 · 陈列面积核查",
+        "demo_only": true,
+        "trace_id": "SFA-HEMA-REGION-DISPLAY-WK42",
+        "scope": "华东·盒马·A类·同为2天临促·匿名达标5店（独立模拟对标样本，不计入本次8店汇总）",
+        "sample_size": 5,
+        "peer_areas_sqm": [
+          3,
+          3.2,
+          3.2,
+          3.4,
+          3.6
+        ],
+        "median_area_sqm": 3.2,
+        "store_area_sqm": 2,
+        "gap_sqm": 1.2,
+        "gap_percent": -37.5,
+        "note": "低于区域同类中位数不代表违反活动标准；活动陈列硬标准尚未提供。"
+      }
+    },
+    {
+      "cycle_id": "PROMO-HEMA-WK42",
+      "store_id": "HEMA-DEMO-02",
+      "visited_at": "2026-10-18T14:20:00+08:00",
+      "visitor_role": "战区销售（模拟）",
+      "visit_status": "已完成",
+      "display_position": "主通道",
+      "display_area_sqm": 3.2,
+      "distributed_skus": 5,
+      "price_compliant": true,
+      "brand_material": true,
+      "promoter_present": true,
+      "quality_feedback": "现场口感反馈待复核，不代表客观检测",
+      "promoter_issue": null,
+      "action_note": "核对陈列照片及执行时点",
+      "trace_id": "SFA-HEMA-DEMO-02-WK42",
+      "review_case": {
+        "kind": "sku",
+        "title": "案例二 · 新增一款SKU试销评估",
+        "demo_only": true,
+        "trace_id": "POS-HEMA-REGION-SKU-WK42",
+        "scope": "华东·盒马·A类·同为2天临促·匿名达标5店（独立模拟对标样本，不计入本次8店汇总）",
+        "sample_size": 5,
+        "active_skus": [
+          "金果散装",
+          "绿果散装",
+          "红果散装",
+          "金果礼盒",
+          "绿果小包装"
+        ],
+        "candidate": {
+          "name": "金果小包装",
+          "listed_at_store": false,
+          "peer_selling_stores": 4,
+          "peer_total_stores": 5,
+          "peer_sales_yuan": 6000,
+          "peer_total_pos_yuan": 50000,
+          "peer_sales_share_percent": 12
+        },
+        "missing_evidence": [
+          "客户商品准入",
+          "总部供货能力",
+          "单品毛利",
+          "门店陈列空间"
+        ],
+        "trial_plan": "经理确认后试销两个周末，比较整体POS、毛利及原有SKU变化；无对照不认定增量。",
+        "note": "在售5款由模拟SFA清单确认；仅推荐试销候选，不等于必须新增或缺货。"
+      }
+    },
+    {
+      "cycle_id": "PROMO-HEMA-WK42",
+      "store_id": "HEMA-DEMO-03",
+      "visited_at": "2026-10-18T14:20:00+08:00",
+      "visitor_role": "战区销售（模拟）",
+      "visit_status": "已完成",
+      "display_position": "主通道",
+      "display_area_sqm": 3.2,
+      "distributed_skus": 6,
+      "price_compliant": true,
+      "brand_material": true,
+      "promoter_present": true,
+      "quality_feedback": "现场口感反馈待复核，不代表客观检测",
+      "promoter_issue": null,
+      "action_note": "核对陈列照片及执行时点",
+      "trace_id": "SFA-HEMA-DEMO-03-WK42",
+      "review_case": {
+        "kind": "office",
+        "title": "案例三 · 办公商圈与周末活动匹配",
+        "demo_only": true,
+        "trace_id": "POS-HEMA-OFFICE-HISTORY-WK42",
+        "scope": "望京店·办公商圈·历史4个可比周（模拟POS日型汇总）",
+        "store_grade": "A",
+        "grade_basis": "长期综合销售分级，不代表每个周末均应达到相同目标",
+        "business_area": "办公楼周边，工作日消费为主（模拟门店档案）",
+        "weekday_daily_avg_yuan": 6000,
+        "weekend_daily_avg_yuan": 4000,
+        "weekend_weekday_ratio_percent": 66.7,
+        "history": [
+          {
+            "week": "W38",
+            "weekday_daily_avg_yuan": 6000,
+            "weekend_pos_yuan": 7800
+          },
+          {
+            "week": "W39",
+            "weekday_daily_avg_yuan": 6200,
+            "weekend_pos_yuan": 8200
+          },
+          {
+            "week": "W40",
+            "weekday_daily_avg_yuan": 5800,
+            "weekend_pos_yuan": 7600
+          },
+          {
+            "week": "W41",
+            "weekday_daily_avg_yuan": 6000,
+            "weekend_pos_yuan": 8400
+          }
+        ],
+        "historical_weekend_avg_yuan": 8000,
+        "current_vs_historical_percent": 0,
+        "current_vs_previous_percent": 2.6,
+        "missing_evidence": [
+          "周末客流与消费客群",
+          "节假日及周边办公日历",
+          "门店营业时段"
+        ],
+        "suggested_action": "客户经理确认商圈规律后，评估改为工作日午间/下班时段临促；依据可比日型重审目标，再做小范围试验。",
+        "note": "本次目标仍为10000元，达成80%，不改写原目标或直接认定合格。历史周末基本稳定，商圈是待验证解释；无客流证据不认定因果，也不承诺临促增量。"
+      }
+    },
+    {
+      "cycle_id": "PROMO-HEMA-WK42",
+      "store_id": "HEMA-DEMO-04",
+      "visited_at": "2026-10-18T14:20:00+08:00",
+      "visitor_role": "战区销售（模拟）",
+      "visit_status": "已完成",
+      "display_position": "主通道",
+      "display_area_sqm": 3.2,
+      "distributed_skus": 6,
+      "price_compliant": true,
+      "brand_material": true,
+      "promoter_present": true,
+      "quality_feedback": "现场口感反馈待复核，不代表客观检测",
+      "promoter_issue": null,
+      "action_note": "核对陈列照片及执行时点",
+      "trace_id": "SFA-HEMA-DEMO-04-WK42"
+    },
+    {
+      "cycle_id": "PROMO-HEMA-WK42",
+      "store_id": "HEMA-DEMO-05",
+      "visited_at": "2026-10-18T14:20:00+08:00",
+      "visitor_role": "战区销售（模拟）",
+      "visit_status": "已完成",
+      "display_position": "主通道",
+      "display_area_sqm": 3.2,
+      "distributed_skus": 6,
+      "price_compliant": true,
+      "brand_material": true,
+      "promoter_present": true,
+      "quality_feedback": "现场口感反馈待复核，不代表客观检测",
+      "promoter_issue": null,
+      "action_note": "核对陈列照片及执行时点",
+      "trace_id": "SFA-HEMA-DEMO-05-WK42"
+    },
+    {
+      "cycle_id": "PROMO-HEMA-WK42",
+      "store_id": "HEMA-DEMO-06",
+      "visited_at": "2026-10-18T14:20:00+08:00",
+      "visitor_role": "战区销售（模拟）",
+      "visit_status": "已完成",
+      "display_position": "主通道",
+      "display_area_sqm": 3.2,
+      "distributed_skus": 6,
+      "price_compliant": true,
+      "brand_material": true,
+      "promoter_present": true,
+      "quality_feedback": "现场口感反馈待复核，不代表客观检测",
+      "promoter_issue": null,
+      "action_note": "核对陈列照片及执行时点",
+      "trace_id": "SFA-HEMA-DEMO-06-WK42"
+    },
+    {
+      "cycle_id": "PROMO-HEMA-WK42",
+      "store_id": "HEMA-DEMO-07",
+      "visited_at": "2026-10-18T14:20:00+08:00",
+      "visitor_role": "战区销售（模拟）",
+      "visit_status": "已完成",
+      "display_position": "主通道",
+      "display_area_sqm": 3.2,
+      "distributed_skus": 6,
+      "price_compliant": true,
+      "brand_material": true,
+      "promoter_present": true,
+      "quality_feedback": "现场口感反馈待复核，不代表客观检测",
+      "promoter_issue": null,
+      "action_note": "核对陈列照片及执行时点",
+      "trace_id": "SFA-HEMA-DEMO-07-WK42"
+    },
+    {
+      "cycle_id": "PROMO-HEMA-WK42",
+      "store_id": "HEMA-DEMO-08",
+      "visited_at": "2026-10-18T14:20:00+08:00",
+      "visitor_role": "战区销售（模拟）",
+      "visit_status": "已完成",
+      "display_position": "主通道",
+      "display_area_sqm": 3.2,
+      "distributed_skus": 6,
+      "price_compliant": true,
+      "brand_material": true,
+      "promoter_present": true,
+      "quality_feedback": "现场口感反馈待复核，不代表客观检测",
+      "promoter_issue": null,
+      "action_note": "核对陈列照片及执行时点",
+      "trace_id": "SFA-HEMA-DEMO-08-WK42"
+    }
+  ]
+}

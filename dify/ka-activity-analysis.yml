@@ -104,7 +104,9 @@ workflow:
                 经营数字不得自行重算。每条事实、缺口、假设、建议都要引用输入trace_ids中的值。
                 假设必须标记待验证。没有库存证据不得判断缺货；没有有效对照不得声称因果增量；不得自动审批费用或资源。
                 只输出合法JSON，不要Markdown。字段必须为facts、data_gaps、hypotheses、recommended_checks、boundaries、management_summary、citations。
-                facts、data_gaps、hypotheses、recommended_checks四项为[{"text":"...","citations":["..."]}]；boundaries必须是字符串数组；management_summary含title和conclusion；citations为本次使用的全部引用去重集合。
+                facts、data_gaps、hypotheses、recommended_checks四项为[{"text":"...","citations":["..."]}]；boundaries必须是纯字符串数组（每项是字符串，不要用对象或引用）；management_summary含title和conclusion；citations为本次使用的全部引用去重集合。
+                严格数量约束：facts、data_gaps、hypotheses、recommended_checks、boundaries 每项最多6条，超出只保留最关键的6条。
+                引用约束：facts 每条必须至少引用一个业务证据trace_id（TPM/POS/SFA开头），不得只用知识库（KB开头）条款作为本店经营事实证据；知识条款只能用于hypotheses或recommended_checks作为核查依据。
             - role: user
               text: |-
                 活动：{{#start.activity_id#}}
