@@ -11,15 +11,15 @@ const extra=JSON.parse(await readFile(new URL('../demo-data/nka-promo-demo.json'
 const merged=attachNkaPromoDemo(dataset,extra),cycle='PROMO-HEMA-WK42';
 const report=summarizeWeekendPromo(merged,{tasks:[]},cycle);
 test('NKA demo totals reconcile exactly with the approved mockup',()=>{
- const t=model.totals(report.stores);assert.equal(t.pos,83200);assert.equal(t.target,80000);assert.equal(t.rate,104);assert.equal(t.personDays,16);assert.equal(t.cost,6400);assert.equal(t.achieved,6);assert.equal(t.count,8);
- assert.deepEqual(model.priorities(report.stores).map(x=>x.store_id),['HEMA-DEMO-01','HEMA-DEMO-02']);
+ const t=model.totals(report.stores);assert.equal(t.pos,80200);assert.equal(t.target,80000);assert.equal(t.rate,100.25);assert.equal(t.personDays,16);assert.equal(t.cost,6400);assert.equal(t.achieved,5);assert.equal(t.count,8);
+ assert.deepEqual(model.priorities(report.stores).map(x=>x.store_id),['HEMA-DEMO-01','HEMA-DEMO-03','HEMA-DEMO-02']);
  assert.equal(model.change(7200,8500).toFixed(1),'-15.3');assert.equal(model.totals([]).rate,null);
  assert.equal(dataset.stores.some(x=>x.id==='HEMA-DEMO-01'),false);
 });
 test('region-scoped totals and priorities never include another region',()=>{
  const regions=['east','north','central','southwest','northwest'];let sum=0;
- for(const region of regions){const rows=model.scoped(report.stores,region);assert(rows.every(x=>x.region===region));sum+=model.totals(rows).pos;assert(model.priorities(rows).every(x=>x.region===region));}assert.equal(sum,83200);
- const s=report.stores[0];assert.equal(s.benchmark.sample_size,6);assert.equal(s.benchmark.display_area_sqm_median,3.2);assert.equal(s.benchmark.distributed_skus_median,6);assert(!JSON.stringify(s.benchmark).includes('store_name'));
+ for(const region of regions){const rows=model.scoped(report.stores,region);assert(rows.every(x=>x.region===region));sum+=model.totals(rows).pos;assert(model.priorities(rows).every(x=>x.region===region));}assert.equal(sum,80200);
+ const s=report.stores[0];assert.equal(s.benchmark.sample_size,5);assert.equal(s.benchmark.display_area_sqm_median,3.2);assert.equal(s.benchmark.distributed_skus_median,6);assert(!JSON.stringify(s.benchmark).includes('store_name'));
 });
 test('NKA question guard refuses general business and accepts scoped review',()=>{
  for(const q of ['临促预算多少','分析全渠道','普通客户经营','上月POS是多少','写代码'])assert.throws(()=>assertPromoDemoQuestion(q));
@@ -93,4 +93,46 @@ test('opening and switching NKA stores never restores saved AI or calls the mode
  const html=vm.runInContext('nkaAnalysisPanel({ai_eligible:true})',context);
  assert(html.includes('开始AI复盘分析'));assert(!html.includes('历史AI不应自动出现'));assert(!html.includes('<h4>AI复盘结论</h4>'));assert(html.includes('不会自动调用模型'));
  const launcher=await readFile(new URL('../双击打开AI经营驾驶舱.command',import.meta.url),'utf8');assert(!launcher.includes('prepare-nka-reviews'));
+});
+
+test('two review cases carry traceable mock evidence without changing promo totals',()=>{
+ const display=report.stores.find(x=>x.store_id==='HEMA-DEMO-01');
+ const sku=report.stores.find(x=>x.store_id==='HEMA-DEMO-02');
+ const c=display.review_case;assert.equal(c.demo_only,true);assert.equal(c.sample_size,5);
+ const sorted=[...c.peer_areas_sqm].sort((a,b)=>a-b);assert.equal(sorted[2],c.median_area_sqm);
+ assert.equal(Number(((c.store_area_sqm/c.median_area_sqm-1)*100).toFixed(1)),c.gap_percent);
+ assert(display.trace_ids.includes(c.trace_id));assert(c.note.includes('不代表'));
+ const r=sku.review_case;assert.equal(r.active_skus.length,sku.sfa.distributed_skus);
+ assert(!r.active_skus.includes(r.candidate.name));assert.equal(r.candidate.listed_at_store,false);
+ assert.equal(r.candidate.peer_sales_yuan/r.candidate.peer_total_pos_yuan*100,r.candidate.peer_sales_share_percent);
+ assert(sku.trace_ids.includes(r.trace_id));assert.equal(r.missing_evidence.length,4);
+ assert.equal(sku.sfa.display_area_sqm,sku.benchmark.display_area_sqm_median);
+ assert.equal(model.totals(report.stores).pos,80200);
+});
+
+test('office A store misses original target but matches its historical weekend baseline',()=>{
+ const s=report.stores.find(x=>x.store_id==='HEMA-DEMO-03'),c=s.review_case;
+ assert.equal(s.grade,'A');assert.equal(s.issue_status,'未达标');assert.equal(s.achievement_rate,80);
+ assert.equal(s.current_pos,8000);assert.equal(s.target,10000);assert.equal(s.previous_pos,7800);
+ assert.equal(c.history.reduce((a,x)=>a+x.weekend_pos_yuan,0)/c.history.length,c.historical_weekend_avg_yuan);
+ assert.equal(c.history.reduce((a,x)=>a+x.weekday_daily_avg_yuan,0)/c.history.length,c.weekday_daily_avg_yuan);
+ assert.equal(c.historical_weekend_avg_yuan/2,c.weekend_daily_avg_yuan);
+ assert.equal(s.current_pos,c.historical_weekend_avg_yuan);assert.equal(c.current_vs_historical_percent,0);
+ assert.equal(Number(((s.current_pos/s.previous_pos-1)*100).toFixed(1)),c.current_vs_previous_percent);
+ assert(s.trace_ids.includes(c.trace_id));assert(s.gaps.every(g=>g.status!=='存在差距'&&g.status!=='存在差异'));
+ assert(c.note.includes('不改写原目标'));assert.equal(model.totals(report.stores).achieved,5);
+});
+
+test('draft defaults to each store account manager and missing mapping never invents one',async()=>{
+ const vm=await import('node:vm'),els={};const get=id=>els[id]??={value:'',textContent:'',hidden:true};
+ const source=(await readFile(new URL('../nka-promo.js',import.meta.url),'utf8')).split('const nkaBaseRender=')[0];
+ const ctx=vm.createContext({localStorage:{getItem:()=>null},NkaPromoModel:model,esc:String,$:get,doAction:()=>{},nkaRegions:{}});
+ vm.runInContext(source,ctx);ctx.rows=structuredClone(report.stores);
+ vm.runInContext('NKA.report={stores:rows};nkaRender=()=>{};',ctx);
+ for(const id of ['HEMA-DEMO-01','HEMA-DEMO-02','HEMA-DEMO-03']){
+  ctx.id=id;vm.runInContext("NKA.selected=id;NKA.run={analysis:{recommended_checks:[{text:'核查执行'}]},context:{selected_store:{store_id:id}}};NKA.decision='adopted';nkaDraft();",ctx);
+  const store=report.stores.find(x=>x.store_id===id);assert.equal(get('nkaOwner').value,store.account_manager.name);assert(get('nkaOwnerHint').textContent.includes(store.store_name));
+ }
+ vm.runInContext("NKA.selected='HEMA-DEMO-03';NKA.report.stores.find(x=>x.store_id===NKA.selected).account_manager=null;nkaDraft();",ctx);
+ assert.equal(get('nkaOwner').value,'');assert(get('nkaOwnerHint').textContent.includes('未配置'));
 });

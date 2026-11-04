@@ -11,6 +11,7 @@ import { summarizeStoreExecution } from './store-execution.mjs';
 import { summarizeWeekendPromo } from './weekend-promo-review.mjs';
 import { executeWeekendPromoTools, planWeekendPromoReview } from './weekend-promo-agent.mjs';
 import { resolveMonthlyStorePos } from './store-pos-query.mjs';
+import { createMiApp } from './marketing-intelligence/routes.mjs';
 
 function notFound(message = '接口不存在') {
   const error = new Error(message);
@@ -22,7 +23,8 @@ function splitPath(pathname) {
   return pathname.split('/').filter(Boolean).map(decodeURIComponent);
 }
 
-export function createApp({ dataset, stateStore, difyClient = { configured: false, run: async () => { throw new Error('Dify尚未配置'); } } }) {
+export function createApp({ dataset, stateStore, difyClient = { configured: false, run: async () => { throw new Error('Dify尚未配置'); } }, miDataset = null }) {
+  const miApp = miDataset ? createMiApp({ miDataset }) : null;
   return async function app(req, res) {
     const origin = req.headers.origin || '';
     try {
@@ -33,6 +35,10 @@ export function createApp({ dataset, stateStore, difyClient = { configured: fals
       const url = new URL(req.url, 'http://127.0.0.1');
       const parts = splitPath(url.pathname);
       if (parts[0] !== 'api') throw notFound();
+      // 四 Agent 联合分析路由：/api/mi/*，与现有临促复盘隔离
+      if (parts[1] === 'mi' && miApp) {
+        return miApp(req, res);
+      }
       const snapshot = stateStore?.snapshot?.() || { data_version: dataset.dataset_version, tasks: [], evidence: [], analyses: [], agent_runs: [], dashboard_chats: [] };
 
       if (req.method === 'GET' && parts[1] === 'health' && parts.length === 2) {
@@ -90,7 +96,7 @@ export function createApp({ dataset, stateStore, difyClient = { configured: fals
             activity_id: cycleId,
             question: `本次临促复盘，仅回答所选门店的活动表现、SFA证据与下周验证建议；拒绝预算及普通客户经营问题。周末临促受控Agent：${plan.question}\n只能根据BI确定性指标、当前门店SFA证据和匿名对标聚合回答；不得重算指标、暴露对标门店明细或声称因果。`,
             role: 'NKA客户经理',
-            evidence_json: JSON.stringify({ data_version: snapshot.data_version, trace_ids: evidenceTraceIds, cycle: review.cycle, rule: review.rule, authorization: review.authorization, store, agent_context: { plan, trace } }),
+            evidence_json: JSON.stringify({ data_version: snapshot.data_version, trace_ids: evidenceTraceIds, cycle: review.cycle, rule: review.rule, authorization: review.authorization, store, agent_context: { tools: trace.map(({label, trace_id}) => ({label, trace_id})) } }),
             data_version: String(snapshot.data_version)
           });
           const analysis = validateAnalysis(raw, evidenceTraceIds);

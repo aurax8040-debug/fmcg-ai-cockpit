@@ -13,3 +13,5 @@
 .nka-update-notice{background:#fff8e9;border:1px solid #f1dfba;border-radius:10px;padding:12px;margin:10px 0;color:#6b5834}
 .nka-update-notice p{margin:0 0 8px;line-height:1.6}.nka-update-notice button{border:1px solid #decda5;background:white;color:#6b5834;border-radius:6px;padding:5px 12px;cursor:pointer}
 .nka-update-notice details{margin-top:8px}.nka-update-notice details p{overflow-wrap:anywhere;font-size:11px;margin-top:8px}
+
+.nka-case-picker{display:flex;gap:10px;margin:14px 0}.nka-case-picker button{flex:1;text-align:left;padding:12px 16px;border:1px solid #dae1ff;border-radius:12px;background:#fff;color:#505c80;cursor:pointer;font-weight:600}.nka-case-picker button.active{background:#eef0ff;border-color:#7672ff;color:#5344e7}.nka-case-picker small{display:block;margin-top:5px;font-weight:400}.nka-case-evidence>p{font-size:12px;line-height:1.8;color:#647391}.nka-case-metrics{display:flex;align-items:center;flex-wrap:wrap;gap:16px;padding:14px;background:#f4f6ff;border-radius:10px;margin:12px 0;font-size:13px}.nka-case-metrics strong{color:#6b55e9}@media(max-width:600px){.nka-case-picker{flex-direction:column}}
