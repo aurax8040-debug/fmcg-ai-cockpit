@@ -87,6 +87,7 @@ export function summarizeWeekendPromo(dataset, snapshot = { tasks: [] }, cycleId
     return {
       store_id: storeId,
       store_name: store?.name || storeId,
+      account_manager: store?.account_manager || null,
       ka_id: store?.ka_system || store?.ka_id || null,
       ka_name: store?.ka_system || store?.name?.split('·')[2] || null,
       grade: store?.grade || null,
@@ -105,7 +106,8 @@ export function summarizeWeekendPromo(dataset, snapshot = { tasks: [] }, cycleId
       ai_eligible: issueStatus === '未达标',
       sfa_status: sfa ? `已获取 · ${sfa.visited_at.slice(5, 16).replace('T', ' ')}` : '本周无有效记录',
       sfa,
-      trace_ids: [result?.trace_id, resource?.trace_id, sfa?.trace_id].filter(Boolean),
+      review_case: sfa?.review_case || null,
+      trace_ids: [result?.trace_id, resource?.trace_id, sfa?.trace_id, sfa?.review_case?.trace_id].filter(Boolean),
       previous_task: (snapshot.tasks || []).find(task => task.store_id === storeId && task.task_type === 'next_week_store_visit') || null
     };
   });

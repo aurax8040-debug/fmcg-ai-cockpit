@@ -1,3 +1,5 @@
+import { savedPromoReviews } from './nka-saved-review.mjs';
+import { assertPromoDemoQuestion } from './nka-promo-demo.mjs';
 import { assertSafeId } from './domain.mjs';
 import { summarizeActivity } from './metrics.mjs';
 import { errorStatus, isLoopbackOrigin, readJson, sendJson } from './http-utils.mjs';
@@ -9,6 +11,7 @@ import { summarizeStoreExecution } from './store-execution.mjs';
 import { summarizeWeekendPromo } from './weekend-promo-review.mjs';
 import { executeWeekendPromoTools, planWeekendPromoReview } from './weekend-promo-agent.mjs';
 import { resolveMonthlyStorePos } from './store-pos-query.mjs';
+import { createMiApp } from './marketing-intelligence/routes.mjs';
 
 function notFound(message = '接口不存在') {
   const error = new Error(message);
@@ -20,7 +23,8 @@ function splitPath(pathname) {
   return pathname.split('/').filter(Boolean).map(decodeURIComponent);
 }
 
-export function createApp({ dataset, stateStore, difyClient = { configured: false, run: async () => { throw new Error('Dify尚未配置'); } } }) {
+export function createApp({ dataset, stateStore, difyClient = { configured: false, run: async () => { throw new Error('Dify尚未配置'); } }, miDataset = null }) {
+  const miApp = miDataset ? createMiApp({ miDataset }) : null;
   return async function app(req, res) {
     const origin = req.headers.origin || '';
     try {
@@ -31,6 +35,10 @@ export function createApp({ dataset, stateStore, difyClient = { configured: fals
       const url = new URL(req.url, 'http://127.0.0.1');
       const parts = splitPath(url.pathname);
       if (parts[0] !== 'api') throw notFound();
+      // 四 Agent 联合分析路由：/api/mi/*，与现有临促复盘隔离
+      if (parts[1] === 'mi' && miApp) {
+        return miApp(req, res);
+      }
       const snapshot = stateStore?.snapshot?.() || { data_version: dataset.dataset_version, tasks: [], evidence: [], analyses: [], agent_runs: [], dashboard_chats: [] };
 
       if (req.method === 'GET' && parts[1] === 'health' && parts.length === 2) {
@@ -65,7 +73,8 @@ export function createApp({ dataset, stateStore, difyClient = { configured: fals
       }
       if (req.method === 'GET' && parts[1] === 'weekend-promos' && parts[2] === 'current' && parts.length === 3) {
         const cycleId = assertSafeId(url.searchParams.get('cycle_id') || 'PROMO-WK14', 'cycle_id');
-        return sendJson(res, 200, summarizeWeekendPromo(dataset, snapshot, cycleId), origin);
+        const review = summarizeWeekendPromo(dataset, snapshot, cycleId);
+        return sendJson(res, 200, { ...review, saved_reviews: savedPromoReviews(review, snapshot.dashboard_chats) }, origin);
       }
       if (req.method === 'POST' && parts[1] === 'weekend-promos' && parts[2] === 'investigate' && parts.length === 3) {
         const payload = await readJson(req);
@@ -74,7 +83,9 @@ export function createApp({ dataset, stateStore, difyClient = { configured: fals
         const review = summarizeWeekendPromo(dataset, snapshot, cycleId);
         const store = review.stores.find(row => row.store_id === storeId);
         if (!store) throw notFound('门店不存在');
-        const plan = planWeekendPromoReview(payload.question || '请分析本周未达标门店与同类达标门店的执行差距，并生成下周验证计划', store);
+        const promoQuestion=payload.question || '分析本次临促执行差距并生成下周验证计划';
+        if(cycleId==='PROMO-HEMA-WK42')assertPromoDemoQuestion(promoQuestion);
+        const plan = planWeekendPromoReview(promoQuestion, store);
         const trace = executeWeekendPromoTools(plan, store).map(row => ({
           ...row,
           trace_id: `TR-${cycleId}-${storeId}-${row.tool}`
@@ -83,9 +94,9 @@ export function createApp({ dataset, stateStore, difyClient = { configured: fals
         try {
           const raw = await difyClient.run({
             activity_id: cycleId,
-            question: `周末临促受控Agent：${plan.question}\n只能根据BI确定性指标、当前门店SFA证据和匿名对标聚合回答；不得重算指标、暴露对标门店明细或声称因果。`,
+            question: `本次临促复盘，仅回答所选门店的活动表现、SFA证据与下周验证建议；拒绝预算及普通客户经营问题。周末临促受控Agent：${plan.question}\n只能根据BI确定性指标、当前门店SFA证据和匿名对标聚合回答；不得重算指标、暴露对标门店明细或声称因果。`,
             role: 'NKA客户经理',
-            evidence_json: JSON.stringify({ data_version: snapshot.data_version, trace_ids: evidenceTraceIds, cycle: review.cycle, rule: review.rule, authorization: review.authorization, store, agent_context: { plan, trace } }),
+            evidence_json: JSON.stringify({ data_version: snapshot.data_version, trace_ids: evidenceTraceIds, cycle: review.cycle, rule: review.rule, authorization: review.authorization, store, agent_context: { tools: trace.map(({label, trace_id}) => ({label, trace_id})) } }),
             data_version: String(snapshot.data_version)
           });
           const analysis = validateAnalysis(raw, evidenceTraceIds);
@@ -94,7 +105,7 @@ export function createApp({ dataset, stateStore, difyClient = { configured: fals
           const chat = await stateStore.recordDashboardChat({
             question: plan.question, status: 'success', scope_fingerprint: scopeFingerprint,
             scope: { range: review.cycle.label, region: store.region || '华东战区', ka: store.ka_system || '当前KA' },
-            context: { context_type: 'weekend_promo', selected_store: { store_id: store.store_id, store_name: store.store_name, cycle_id: cycleId }, store, cycle: review.cycle },
+            context: { review_kind: payload.review_kind === 'standard' ? 'standard' : 'followup', context_type: 'weekend_promo', selected_store: { store_id: store.store_id, store_name: store.store_name, cycle_id: cycleId }, store, cycle: review.cycle },
             answer_source: 'dify_weekend_agent', trace, analysis
           });
           return sendJson(res, 200, { agent_status: 'success', run: saved.run, chat_run: chat.run, store }, origin);

@@ -17,7 +17,13 @@ test('dashboard is the single primary entry without the four-stage shell', () =>
 });
 
 test('legacy pages remain accessible exactly once', () => {
-  for (const page of ['why', 'store', 'ka', 'bi-detail', 'bi-month', 'bi-customer', 'bi-region', 'bi-cate', 'budget', 'pos', 'ai', 'brief']) {
+  assert.equal((html.match(/data-page="sales-summary"/g)||[]).length,1);
+  for(const id of ['bi-month','bi-customer','bi-region']) {
+    assert.equal((html.match(new RegExp(`id="page-${id}"`,'g'))||[]).length,1);
+    assert.equal((html.match(new RegExp(`data-page="${id}"`,'g'))||[]).length,0);
+  }
+  assert.match(html,/src="sales-summary.js/);
+  for (const page of ['store', 'ka', 'bi-detail', 'bi-cate', 'budget', 'pos']) {
     assert.equal((html.match(new RegExp(`data-page="${page}"`, 'g')) || []).length, 1, page);
     assert.equal((html.match(new RegExp(`id="page-${page}"`, 'g')) || []).length, 1, page);
   }
@@ -67,4 +73,12 @@ test('weekend promo dashboard separates BI screening from controlled agent analy
   assert.doesNotMatch(cockpit, /佳农ERP＋客户POS|受控商圈台账/);
   assert.doesNotMatch(cockpit, /class="agent-result/);
   for (const text of ['promo-summary', 'promo-store-row', 'promo-store-action', 'promo-gap-table', 'promo-stage-label', 'unified-ai-window', 'ai-promo-result', 'ai-comparison']) assert.match(css, new RegExp(text));
+});
+
+test('business navigation places core work first and removes presentation-only entries',()=>{
+ const entries=[...html.matchAll(/data-page="([^"]+)"/g)].map(x=>x[1]);
+ assert.deepEqual(entries.slice(0,4),['dash','budget','nka-promo','store']);
+ for(const id of ['why','ai','brief','mi-joint'])assert(!entries.includes(id));
+ assert.doesNotMatch(html,/<script[^>]+src="mi-joint.js/);
+ for(const id of ['why','ai','brief'])assert.match(html,new RegExp(`id="page-${id}"`));
 });

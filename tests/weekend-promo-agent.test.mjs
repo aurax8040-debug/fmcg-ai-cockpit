@@ -64,6 +64,6 @@ test('weekend promo API sends Dify a versioned evidence package with allowed tra
   });
   const evidence = JSON.parse(received.evidence_json);
   assert.equal(String(evidence.data_version), received.data_version);
-  assert.ok(evidence.trace_ids.includes('POS-PROMO-WK14-STORE-HD'));
+  assert.ok(evidence.trace_ids.includes('TR-WK14-POS-HD'));
   assert.ok(evidence.trace_ids.includes('TR-PROMO-WK14-STORE-HD-peer_benchmark'));
 });
